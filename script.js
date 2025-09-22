@@ -1,6 +1,29 @@
 // Portfolio JavaScript - Elenyx
 
 document.addEventListener('DOMContentLoaded', function() {
+    // --- Runtime Status Display ---
+    const startTime = Date.now();
+    const runtimeDisplay = document.getElementById('runtime-display');
+    
+    function updateRuntime() {
+        const currentTime = Date.now();
+        const uptime = currentTime - startTime;
+        
+        const hours = Math.floor(uptime / (1000 * 60 * 60));
+        const minutes = Math.floor((uptime % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((uptime % (1000 * 60)) / 1000);
+        
+        const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (runtimeDisplay) {
+            runtimeDisplay.textContent = formattedTime;
+        }
+    }
+    
+    // Update runtime every second
+    updateRuntime(); // Initial call
+    setInterval(updateRuntime, 1000);
+
     // --- Fade-in Animation ---
     const observerOptions = {
         threshold: 0.1,
