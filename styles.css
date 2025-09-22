@@ -1,0 +1,316 @@
+/* Portfolio Styles - Elenyx */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0a0a0a;
+    color: #a0a0a0;
+    overflow-x: hidden;
+}
+
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.animated-background::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1200px;
+    height: 1200px;
+    background: radial-gradient(circle at 20% 80%, rgba(192, 192, 192, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(160, 160, 160, 0.05) 0%, transparent 40%);
+    animation: aurora-spin 30s linear infinite;
+}
+
+@keyframes aurora-spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #e0e0e0, #b0b0b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.3s ease;
+}
+
+.gradient-text:hover {
+    background: linear-gradient(90deg, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+}
+
+/* Glowing text effects */
+.glow-text {
+    transition: all 0.3s ease;
+}
+
+.glow-text:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4),
+                 0 0 20px rgba(255, 255, 255, 0.2),
+                 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.glow-text-blue:hover {
+    color: #58a6ff;
+    text-shadow: 0 0 10px rgba(88, 166, 255, 0.5),
+                 0 0 20px rgba(88, 166, 255, 0.3),
+                 0 0 30px rgba(88, 166, 255, 0.1);
+}
+
+.glow-text-teal:hover {
+    color: #3fc0c0;
+    text-shadow: 0 0 10px rgba(63, 192, 192, 0.5),
+                 0 0 20px rgba(63, 192, 192, 0.3),
+                 0 0 30px rgba(63, 192, 192, 0.1);
+}
+
+.glow-text-purple:hover {
+    color: #d686ff;
+    text-shadow: 0 0 10px rgba(214, 134, 255, 0.5),
+                 0 0 20px rgba(214, 134, 255, 0.3),
+                 0 0 30px rgba(214, 134, 255, 0.1);
+}
+
+/* Soft glowing text effect */
+.glow-text-soft {
+    color: #e5e7eb;
+    text-shadow: 0 0 8px rgba(229, 231, 235, 0.3),
+                 0 0 16px rgba(229, 231, 235, 0.2),
+                 0 0 24px rgba(229, 231, 235, 0.1);
+    animation: soft-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes soft-glow {
+    from {
+        text-shadow: 0 0 8px rgba(229, 231, 235, 0.3),
+                     0 0 16px rgba(229, 231, 235, 0.2),
+                     0 0 24px rgba(229, 231, 235, 0.1);
+    }
+    to {
+        text-shadow: 0 0 12px rgba(229, 231, 235, 0.4),
+                     0 0 20px rgba(229, 231, 235, 0.3),
+                     0 0 32px rgba(229, 231, 235, 0.2);
+    }
+}
+
+/* Typing cursor animation */
+.typing-cursor {
+    animation: blink 1s infinite;
+    color: #3fc0c0;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Navigation Styles */
+.nav-link {
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3fc0c0, #58a6ff);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    color: #3fc0c0;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Navbar background transition */
+.navbar-scrolled {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(20px);
+}
+
+/* Enhanced number glow effects */
+.stat-number {
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.stat-number:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6),
+                 0 0 30px rgba(255, 255, 255, 0.4),
+                 0 0 45px rgba(255, 255, 255, 0.2);
+}
+
+/* Soft highlight for headings */
+.soft-highlight {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.soft-highlight:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.card {
+    background-color: rgba(16, 16, 16, 0.7);
+    border: 1px solid #2a2a2a;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #555;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.tag {
+    background-color: rgba(224, 224, 224, 0.1);
+    color: #c0c0c0;
+    border: 1px solid rgba(224, 224, 224, 0.15);
+}
+
+/* Fade-in animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Tech Tag Hover Effect */
+.tech-tag-group:hover > .tech-tag { opacity: 0.6; filter: grayscale(30%); }
+.tech-tag-group > .tech-tag:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.05); }
+.tech-tag { transition: all 0.2s ease-in-out; border: 1px solid transparent; }
+.tech-tag--blue { background-color: rgba(88, 166, 255, 0.1); color: #58a6ff; }
+.tech-tag--green { background-color: rgba(63, 185, 80, 0.1); color: #3fb950; }
+.tech-tag--purple { background-color: rgba(214, 134, 255, 0.1); color: #d686ff; }
+.tech-tag--orange { background-color: rgba(247, 148, 62, 0.1); color: #f7943e; }
+.tech-tag--pink { background-color: rgba(247, 129, 182, 0.1); color: #f781b6; }
+.tech-tag--teal { background-color: rgba(63, 192, 192, 0.1); color: #3fc0c0; }
+.tech-tag-group:hover > .tech-tag--blue:hover { background-color: rgba(88, 166, 255, 0.2); border-color: #58a6ff; color: #fff; }
+.tech-tag-group:hover > .tech-tag--green:hover { background-color: rgba(63, 185, 80, 0.2); border-color: #3fb950; color: #fff; }
+.tech-tag-group:hover > .tech-tag--purple:hover { background-color: rgba(214, 134, 255, 0.2); border-color: #d686ff; color: #fff; }
+.tech-tag-group:hover > .tech-tag--orange:hover { background-color: rgba(247, 148, 62, 0.2); border-color: #f7943e; color: #fff; }
+.tech-tag-group:hover > .tech-tag--pink:hover { background-color: rgba(247, 129, 182, 0.2); border-color: #f781b6; color: #fff; }
+.tech-tag-group:hover > .tech-tag--teal:hover { background-color: rgba(63, 192, 192, 0.2); border-color: #3fc0c0; color: #fff; }
+
+/* Additional colorful tag variants */
+.tech-tag--red { background-color: rgba(255, 99, 99, 0.1); color: #ff6363; }
+.tech-tag--yellow { background-color: rgba(255, 206, 84, 0.1); color: #ffce54; }
+.tech-tag--indigo { background-color: rgba(129, 140, 248, 0.1); color: #818cf8; }
+.tech-tag--emerald { background-color: rgba(52, 211, 153, 0.1); color: #34d399; }
+.tech-tag--violet { background-color: rgba(196, 181, 253, 0.1); color: #c4b5fd; }
+.tech-tag--rose { background-color: rgba(251, 113, 133, 0.1); color: #fb7185; }
+.tech-tag--amber { background-color: rgba(251, 191, 36, 0.1); color: #fbbf24; }
+.tech-tag--cyan { background-color: rgba(34, 211, 238, 0.1); color: #22d3ee; }
+
+/* Hover effects for additional colors */
+.tech-tag-group:hover > .tech-tag--red:hover { background-color: rgba(255, 99, 99, 0.2); border-color: #ff6363; color: #fff; }
+.tech-tag-group:hover > .tech-tag--yellow:hover { background-color: rgba(255, 206, 84, 0.2); border-color: #ffce54; color: #fff; }
+.tech-tag-group:hover > .tech-tag--indigo:hover { background-color: rgba(129, 140, 248, 0.2); border-color: #818cf8; color: #fff; }
+.tech-tag-group:hover > .tech-tag--emerald:hover { background-color: rgba(52, 211, 153, 0.2); border-color: #34d399; color: #fff; }
+.tech-tag-group:hover > .tech-tag--violet:hover { background-color: rgba(196, 181, 253, 0.2); border-color: #c4b5fd; color: #fff; }
+.tech-tag-group:hover > .tech-tag--rose:hover { background-color: rgba(251, 113, 133, 0.2); border-color: #fb7185; color: #fff; }
+.tech-tag-group:hover > .tech-tag--amber:hover { background-color: rgba(251, 191, 36, 0.2); border-color: #fbbf24; color: #fff; }
+.tech-tag-group:hover > .tech-tag--cyan:hover { background-color: rgba(34, 211, 238, 0.2); border-color: #22d3ee; color: #fff; }
+
+/* Code Animation Styles */
+.typing-caret::after {
+    content: '▋';
+    display: inline-block;
+    animation: blink 0.7s infinite;
+    color: #c0c0c0;
+}
+
+.typing-terminal::after {
+    content: '▋';
+    display: inline-block;
+    animation: blink 0.7s infinite;
+    color: #22d3ee;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.terminal-text {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    color: #22d3ee;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+/* Disable text selection */
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Allow selection for input fields if any */
+input, textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.tech-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
+/* Syntax Highlighting Customization */
+#code-animation-content .hljs {
+    background: transparent !important;
+    color: #a0a0a0;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.875rem;
+}
+.hljs-comment { color: #5c6370; font-style: italic; }
+.hljs-keyword, .hljs-meta, .hljs-selector-tag { color: #c678dd; }
+.hljs-string, .hljs-number, .hljs-regexp, .hljs-symbol, .hljs-bullet, .hljs-link, .hljs-literal { color: #98c379; }
+.hljs-title.function_, .hljs-title.class_ { color: #61afef; }
+.hljs-attr, .hljs-variable, .hljs-template-variable, .hljs-type, .hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-meta-string { color: #e06c75; }
+.hljs-built_in { color: #e5c07b; }

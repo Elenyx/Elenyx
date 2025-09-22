@@ -16,204 +16,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
     <!-- Custom CSS for theme and animations -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #a0a0a0;
-            overflow-x: hidden;
-        }
-
-        .animated-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        .animated-background::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 1200px;
-            height: 1200px;
-            background: radial-gradient(circle at 20% 80%, rgba(192, 192, 192, 0.05) 0%, transparent 40%),
-                        radial-gradient(circle at 80% 20%, rgba(160, 160, 160, 0.05) 0%, transparent 40%);
-            animation: aurora-spin 30s linear infinite;
-        }
-
-        @keyframes aurora-spin {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, #e0e0e0, #b0b0b0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transition: all 0.3s ease;
-        }
-
-        .gradient-text:hover {
-            background: linear-gradient(90deg, #ffffff, #e0e0e0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            transform: scale(1.02);
-        }
-
-        /* Glowing text effects */
-        .glow-text {
-            transition: all 0.3s ease;
-        }
-
-        .glow-text:hover {
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.4),
-                         0 0 20px rgba(255, 255, 255, 0.2),
-                         0 0 30px rgba(255, 255, 255, 0.1);
-        }
-
-        .glow-text-blue:hover {
-            color: #58a6ff;
-            text-shadow: 0 0 10px rgba(88, 166, 255, 0.5),
-                         0 0 20px rgba(88, 166, 255, 0.3),
-                         0 0 30px rgba(88, 166, 255, 0.1);
-        }
-
-        .glow-text-teal:hover {
-            color: #3fc0c0;
-            text-shadow: 0 0 10px rgba(63, 192, 192, 0.5),
-                         0 0 20px rgba(63, 192, 192, 0.3),
-                         0 0 30px rgba(63, 192, 192, 0.1);
-        }
-
-        .glow-text-purple:hover {
-            color: #d686ff;
-            text-shadow: 0 0 10px rgba(214, 134, 255, 0.5),
-                         0 0 20px rgba(214, 134, 255, 0.3),
-                         0 0 30px rgba(214, 134, 255, 0.1);
-        }
-
-        /* Enhanced number glow effects */
-        .stat-number {
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .stat-number:hover {
-            transform: scale(1.1);
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6),
-                         0 0 30px rgba(255, 255, 255, 0.4),
-                         0 0 45px rgba(255, 255, 255, 0.2);
-        }
-
-        /* Soft highlight for headings */
-        .soft-highlight {
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .soft-highlight:hover {
-            color: #ffffff;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-        }
-        
-        .card {
-            background-color: rgba(16, 16, 16, 0.7);
-            border: 1px solid #2a2a2a;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #555;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .tag {
-            background-color: rgba(224, 224, 224, 0.1);
-            color: #c0c0c0;
-            border: 1px solid rgba(224, 224, 224, 0.15);
-        }
-
-        /* Fade-in animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Tech Tag Hover Effect (Preserved) */
-        .tech-tag-group:hover > .tech-tag { opacity: 0.6; filter: grayscale(30%); }
-        .tech-tag-group > .tech-tag:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.05); }
-        .tech-tag { transition: all 0.2s ease-in-out; border: 1px solid transparent; }
-        .tech-tag--blue { background-color: rgba(88, 166, 255, 0.1); color: #58a6ff; }
-        .tech-tag--green { background-color: rgba(63, 185, 80, 0.1); color: #3fb950; }
-        .tech-tag--purple { background-color: rgba(214, 134, 255, 0.1); color: #d686ff; }
-        .tech-tag--orange { background-color: rgba(247, 148, 62, 0.1); color: #f7943e; }
-        .tech-tag--pink { background-color: rgba(247, 129, 182, 0.1); color: #f781b6; }
-        .tech-tag--teal { background-color: rgba(63, 192, 192, 0.1); color: #3fc0c0; }
-        .tech-tag-group:hover > .tech-tag--blue:hover { background-color: rgba(88, 166, 255, 0.2); border-color: #58a6ff; color: #fff; }
-        .tech-tag-group:hover > .tech-tag--green:hover { background-color: rgba(63, 185, 80, 0.2); border-color: #3fb950; color: #fff; }
-        .tech-tag-group:hover > .tech-tag--purple:hover { background-color: rgba(214, 134, 255, 0.2); border-color: #d686ff; color: #fff; }
-        .tech-tag-group:hover > .tech-tag--orange:hover { background-color: rgba(247, 148, 62, 0.2); border-color: #f7943e; color: #fff; }
-        .tech-tag-group:hover > .tech-tag--pink:hover { background-color: rgba(247, 129, 182, 0.2); border-color: #f781b6; color: #fff; }
-        .tech-tag-group:hover > .tech-tag--teal:hover { background-color: rgba(63, 192, 192, 0.2); border-color: #3fc0c0; color: #fff; }
-        
-        /* Code Animation Styles */
-        .typing-caret::after {
-            content: '▋';
-            display: inline-block;
-            animation: blink 0.7s infinite;
-            color: #c0c0c0;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        .tech-icon {
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-color: currentColor;
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-            -webkit-mask-size: contain;
-            mask-size: contain;
-            -webkit-mask-position: center;
-            mask-position: center;
-        }
-
-        /* Syntax Highlighting Customization */
-        #code-animation-content .hljs {
-            background: transparent !important;
-            color: #a0a0a0;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.875rem;
-        }
-        .hljs-comment { color: #5c6370; font-style: italic; }
-        .hljs-keyword, .hljs-meta, .hljs-selector-tag { color: #c678dd; }
-        .hljs-string, .hljs-number, .hljs-regexp, .hljs-symbol, .hljs-bullet, .hljs-link, .hljs-literal { color: #98c379; }
-        .hljs-title.function_, .hljs-title.class_ { color: #61afef; }
-        .hljs-attr, .hljs-variable, .hljs-template-variable, .hljs-type, .hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-meta-string { color: #e06c75; }
-        .hljs-built_in { color: #e5c07b; }
-
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="antialiased">
+    
+    <!-- Navigation Header -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-gray-800/30 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo/Brand -->
+                <div class="flex items-center">
+                    <span class="text-xl font-bold gradient-text">Elenyx</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Home</a>
+                    <a href="#about" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">About</a>
+                    <a href="#skills" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Skills</a>
+                    <a href="#projects" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Projects</a>
+                    <a href="#contact" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden bg-black/40 backdrop-blur-md border-t border-gray-800/30">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#home" class="mobile-nav-link block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-300">Home</a>
+                    <a href="#about" class="mobile-nav-link block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-300">About</a>
+                    <a href="#skills" class="mobile-nav-link block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-300">Skills</a>
+                    <a href="#projects" class="mobile-nav-link block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-300">Projects</a>
+                    <a href="#contact" class="mobile-nav-link block px-3 py-2 text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
     
     <div class="animated-background"></div>
 
@@ -224,6 +70,9 @@
              <div class="grid md:grid-cols-2 gap-16 items-center">
                  <!-- Left Column: Text Content -->
                 <div class="text-center md:text-left fade-in">
+                    <div class="mb-2">
+                        <span id="terminal-prompt" class="terminal-text text-lg md:text-xl typing-terminal"></span>
+                    </div>
                     <h1 class="text-5xl md:text-7xl font-extrabold mb-4">
                         <span class="block text-gray-400">Hi, I'm</span>
                         <span class="gradient-text">Elenyx</span>
@@ -309,11 +158,11 @@
                         <h3 class="text-2xl font-bold text-gray-200 soft-highlight">Discord Bots & RPGs</h3>
                     </div>
                     <p class="text-gray-400 mb-4">Creator of Nexium RPG - a feature-rich space exploration RPG bot with procedural galaxy exploration, dual economies, PvP/PvE combat, and seasonal events.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag text-sm px-3 py-1 rounded-full">TypeScript</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Node.js</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">PostgreSQL</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Docker</span>
+                    <div class="flex flex-wrap gap-2 tech-tag-group">
+                        <span class="tech-tag tech-tag--blue text-sm px-3 py-1 rounded-md">TypeScript</span>
+                        <span class="tech-tag tech-tag--emerald text-sm px-3 py-1 rounded-md">Node.js</span>
+                        <span class="tech-tag tech-tag--purple text-sm px-3 py-1 rounded-md">PostgreSQL</span>
+                        <span class="tech-tag tech-tag--cyan text-sm px-3 py-1 rounded-md">Docker</span>
                     </div>
                 </div>
                 <div class="card p-8 rounded-xl fade-in" style="transition-delay: 200ms;">
@@ -322,11 +171,11 @@
                         <h3 class="text-2xl font-bold text-gray-200 soft-highlight">Web Applications</h3>
                     </div>
                     <p class="text-gray-400 mb-4">Full-stack developer building MMO-style Discord gaming applications with React frontends and robust Express backends.</p>
-                     <div class="flex flex-wrap gap-2">
-                        <span class="tag text-sm px-3 py-1 rounded-full">React</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Vite</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Express</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">OAuth2</span>
+                     <div class="flex flex-wrap gap-2 tech-tag-group">
+                        <span class="tech-tag tech-tag--blue text-sm px-3 py-1 rounded-md">React</span>
+                        <span class="tech-tag tech-tag--yellow text-sm px-3 py-1 rounded-md">Vite</span>
+                        <span class="tech-tag tech-tag--emerald text-sm px-3 py-1 rounded-md">Express</span>
+                        <span class="tech-tag tech-tag--violet text-sm px-3 py-1 rounded-md">OAuth2</span>
                     </div>
                 </div>
                  <div class="card p-8 rounded-xl fade-in" style="transition-delay: 300ms;">
@@ -337,12 +186,12 @@
                         <h3 class="text-2xl font-bold text-gray-200 soft-highlight">Minecraft Plugin Development</h3>
                     </div>
                     <p class="text-gray-400 mb-4">Experienced in creating custom Minecraft server plugins with advanced features, player management systems, economy integrations, and seamless server administration tools.</p>
-                     <div class="flex flex-wrap gap-2">
-                        <span class="tag text-sm px-3 py-1 rounded-full">Java</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Bukkit/Spigot</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Maven</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">MySQL</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Vault API</span>
+                     <div class="flex flex-wrap gap-2 tech-tag-group">
+                        <span class="tech-tag tech-tag--red text-sm px-3 py-1 rounded-md">Java</span>
+                        <span class="tech-tag tech-tag--emerald text-sm px-3 py-1 rounded-md">Bukkit/Spigot</span>
+                        <span class="tech-tag tech-tag--amber text-sm px-3 py-1 rounded-md">Maven</span>
+                        <span class="tech-tag tech-tag--blue text-sm px-3 py-1 rounded-md">MySQL</span>
+                        <span class="tech-tag tech-tag--indigo text-sm px-3 py-1 rounded-md">Vault API</span>
                     </div>
                 </div>
                  <div class="card p-8 rounded-xl fade-in" style="transition-delay: 400ms;">
@@ -351,12 +200,12 @@
                         <h3 class="text-2xl font-bold text-gray-200 soft-highlight">Infrastructure & Community Tools</h3>
                     </div>
                     <p class="text-gray-400 mb-4">DevOps enthusiast and creator of TicketMesh - combining scalable cloud architecture, automated CI/CD pipelines, and community management tools with advanced analytics.</p>
-                     <div class="flex flex-wrap gap-2">
-                        <span class="tag text-sm px-3 py-1 rounded-full">Docker</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Kubernetes</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Terraform</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">PostgreSQL</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Analytics</span>
+                     <div class="flex flex-wrap gap-2 tech-tag-group">
+                        <span class="tech-tag tech-tag--cyan text-sm px-3 py-1 rounded-md">Docker</span>
+                        <span class="tech-tag tech-tag--blue text-sm px-3 py-1 rounded-md">Kubernetes</span>
+                        <span class="tech-tag tech-tag--emerald text-sm px-3 py-1 rounded-md">Terraform</span>
+                        <span class="tech-tag tech-tag--purple text-sm px-3 py-1 rounded-md">PostgreSQL</span>
+                        <span class="tech-tag tech-tag--amber text-sm px-3 py-1 rounded-md">Analytics</span>
                     </div>
                 </div>
             </div>
@@ -523,12 +372,12 @@
                         </div>
                     </div>
                     <p class="text-gray-400 mb-6 flex-grow">Comprehensive space exploration RPG Discord bot with procedural galaxy generation, dual economies, PvP/PvE combat, guilds, and seasonal events. Built with scalable architecture.</p>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="tag text-sm px-3 py-1 rounded-full">TypeScript</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Node.js</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">PostgreSQL</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Redis</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Docker</span>
+                    <div class="flex flex-wrap gap-2 mb-6 tech-tag-group">
+                        <span class="tech-tag tech-tag--blue text-sm px-3 py-1 rounded-md">TypeScript</span>
+                        <span class="tech-tag tech-tag--emerald text-sm px-3 py-1 rounded-md">Node.js</span>
+                        <span class="tech-tag tech-tag--purple text-sm px-3 py-1 rounded-md">PostgreSQL</span>
+                        <span class="tech-tag tech-tag--red text-sm px-3 py-1 rounded-md">Redis</span>
+                        <span class="tech-tag tech-tag--cyan text-sm px-3 py-1 rounded-md">Docker</span>
                     </div>
                     <div class="mt-auto">
                         <a href="https://github.com/Elenyx/discord-nexium" target="_blank" class="w-full text-center flex items-center justify-center gap-2 px-6 py-2.5 bg-gray-800/50 border border-gray-700 font-semibold rounded-lg hover:bg-gray-700 transition-colors">
@@ -553,12 +402,12 @@
                         </div>
                     </div>
                     <p class="text-gray-400 mb-6 flex-grow">Full-stack space MMO-style application with React SPA frontend and Express backend. Features Discord OAuth2, real-time updates, and modern UI/UX design patterns.</p>
-                     <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="tag text-sm px-3 py-1 rounded-full">React</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Vite</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Express</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">PostgreSQL</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Tailwind</span>
+                     <div class="flex flex-wrap gap-2 mb-6 tech-tag-group">
+                        <span class="tech-tag tech-tag--cyan text-sm px-3 py-1 rounded-md">React</span>
+                        <span class="tech-tag tech-tag--violet text-sm px-3 py-1 rounded-md">Vite</span>
+                        <span class="tech-tag tech-tag--yellow text-sm px-3 py-1 rounded-md">Express</span>
+                        <span class="tech-tag tech-tag--purple text-sm px-3 py-1 rounded-md">PostgreSQL</span>
+                        <span class="tech-tag tech-tag--teal text-sm px-3 py-1 rounded-md">Tailwind</span>
                     </div>
                      <div class="mt-auto">
                         <a href="https://github.com/Elenyx/friendly-eureka" target="_blank" class="w-full text-center flex items-center justify-center gap-2 px-6 py-2.5 bg-gray-800/50 border border-gray-700 font-semibold rounded-lg hover:bg-gray-700 transition-colors">
@@ -583,10 +432,10 @@
                         </div>
                     </div>
                     <p class="text-gray-400 mb-6 flex-grow">Enterprise-grade Discord ticket management system with automated channel creation, persistent storage, transcript generation, analytics dashboards, and role-based permissions.</p>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="tag text-sm px-3 py-1 rounded-full">PostgreSQL</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Docker</span>
-                        <span class="tag text-sm px-3 py-1 rounded-full">Analytics</span>
+                    <div class="flex flex-wrap gap-2 mb-6 tech-tag-group">
+                        <span class="tech-tag tech-tag--purple text-sm px-3 py-1 rounded-md">PostgreSQL</span>
+                        <span class="tech-tag tech-tag--cyan text-sm px-3 py-1 rounded-md">Docker</span>
+                        <span class="tech-tag tech-tag--amber text-sm px-3 py-1 rounded-md">Analytics</span>
                     </div>
                      <div class="mt-auto">
                         <a href="https://github.com/Elenyx/TicketMesh" target="_blank" class="w-full text-center flex items-center justify-center gap-2 px-6 py-2.5 bg-gray-800/50 border border-gray-700 font-semibold rounded-lg hover:bg-gray-700 transition-colors">
@@ -602,7 +451,10 @@
         <section id="contact" class="py-20">
             <div class="text-center mb-16 fade-in">
                 <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Let's Connect</h2>
-                <p class="text-lg text-gray-400 max-w-3xl mx-auto">Interested in collaborating on a project, discussing tech, or just saying hello? I'd love to hear from you.</p>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto glow-text-soft">
+                    <span id="collaboration-text" class="typing-animation"></span>
+                    <span class="typing-cursor">|</span>
+                </p>
             </div>
              <div class="grid md:grid-cols-3 gap-8 mb-12">
                 <a href="https://github.com/Elenyx" target="_blank" class="card p-8 rounded-xl text-center fade-in" style="transition-delay: 100ms;">
@@ -643,176 +495,7 @@
         </div>
     </footer>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- Intersection Observer for Fade-in animations ---
-            const animatedElements = document.querySelectorAll('.fade-in');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        
-                        // If the element is a stat card, trigger the count-up animation
-                        if (entry.target.classList.contains('stat-card')) {
-                             const numberEl = entry.target.querySelector('.stat-number');
-                             if (numberEl && !numberEl.dataset.animated) {
-                                 animateCountUp(numberEl);
-                             }
-                        }
-
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            // Add stat cards to the observer
-            document.querySelectorAll('.stat-card').forEach(el => observer.observe(el));
-            animatedElements.forEach(el => observer.observe(el));
-
-            // --- Animate Count Up ---
-            function animateCountUp(el) {
-                const target = parseInt(el.dataset.target, 10);
-                const isPercent = el.textContent.includes('%');
-                el.dataset.animated = 'true';
-                let count = 0;
-                const duration = 1500; // ms
-                const frameDuration = 1000 / 60; // 60fps
-                const totalFrames = Math.round(duration / frameDuration);
-                const increment = target / totalFrames;
-
-                const counter = setInterval(() => {
-                    count += increment;
-                    if (count >= target) {
-                        el.textContent = isPercent ? target + '%' : target + '+';
-                        clearInterval(counter);
-                    } else {
-                        el.textContent = isPercent ? Math.ceil(count) + '%' : Math.ceil(count) + '+';
-                    }
-                }, frameDuration);
-            }
-
-            // --- Role Typing Animation ---
-            const typingRole = document.getElementById('typing-role');
-            if (typingRole) {
-                const roles = ['Discord Bot Developer', 'Full-Stack Engineer', 'TypeScript Expert', 'Backend Architect', 'Open Source Contributor'];
-                let roleIndex = 0;
-                let charIndex = 0;
-                let isDeleting = false;
-
-                function typeRole() {
-                    const currentRole = roles[roleIndex];
-                    let typeSpeed = isDeleting ? 75 : 150;
-
-                    typingRole.textContent = currentRole.substring(0, charIndex);
-
-                    if (isDeleting) {
-                        charIndex--;
-                    } else {
-                        charIndex++;
-                    }
-
-                    if (!isDeleting && charIndex === currentRole.length + 1) {
-                        typeSpeed = 2000;
-                        isDeleting = true;
-                    } else if (isDeleting && charIndex === -1) {
-                        isDeleting = false;
-                        roleIndex = (roleIndex + 1) % roles.length;
-                    }
-                    setTimeout(typeRole, typeSpeed);
-                }
-                setTimeout(typeRole, 500);
-            }
-
-            // --- Code Window Typing Animation ---
-            const codeContainer = document.getElementById('code-animation-content');
-            if (codeContainer) {
-                const codeSnippets = [
-                    { language: 'javascript', code: `// Discord Bot Development\nconst bot = new Client({\n  intents: [GatewayIntentBits.Guilds]\n});\nbot.login(process.env.TOKEN);` },
-                    { language: 'java', code: `// Minecraft Plugin\n@EventHandler\npublic void onPlayerJoin(PlayerJoinEvent e) {\n  Player p = e.getPlayer();\n  p.sendMessage("Welcome!");\n}` },
-                    { language: 'javascript', code: `// Web Application\nconst [gameState, setGameState] = useState({\n  players: [],\n  galaxies: generateGalaxies(),\n  economy: initEconomy()\n});` },
-                    { language: 'sql', code: `/* Database Schema */\nCREATE TABLE users (\n  id SERIAL PRIMARY KEY,\n  discord_id BIGINT UNIQUE,\n  credits INTEGER DEFAULT 0\n);` }
-                ];
-
-                let snippetIndex = 0;
-                let charIndex = 0;
-                let isDeleting = false;
-
-                function typeCode() {
-                    const currentSnippet = codeSnippets[snippetIndex];
-                    let typeSpeed = isDeleting ? 30 : 60;
-
-                    const displayedText = currentSnippet.code.substring(0, charIndex);
-                    
-                    codeContainer.innerHTML = `<pre><code class="language-${currentSnippet.language}"></code></pre>`;
-                    const codeElement = codeContainer.querySelector('code');
-                    codeElement.textContent = displayedText;
-
-                    hljs.highlightElement(codeElement);
-                    
-                    if (!isDeleting && charIndex === currentSnippet.code.length) {
-                        // Pause at the end, caret stops blinking
-                    } else {
-                        codeElement.innerHTML += '<span class="typing-caret"></span>';
-                    }
-
-                    if (!isDeleting && charIndex < currentSnippet.code.length) {
-                        charIndex++;
-                    } else if (isDeleting && charIndex > 0) {
-                        charIndex--;
-                    } else if (!isDeleting && charIndex === currentSnippet.code.length) {
-                        setTimeout(() => { isDeleting = true; }, 2500); 
-                    } else if (isDeleting && charIndex === 0) {
-                        isDeleting = false;
-                        snippetIndex = (snippetIndex + 1) % codeSnippets.length;
-                    }
-                    
-                    setTimeout(typeCode, typeSpeed);
-                }
-                
-                // Trigger code animation on scroll
-                const codeWindow = document.querySelector('.code-window');
-                if (codeWindow) {
-                    const codeObserver = new IntersectionObserver((entries) => {
-                        if (entries[0].isIntersecting && !codeWindow.dataset.animated) {
-                            typeCode();
-                            codeWindow.dataset.animated = 'true';
-                            codeObserver.unobserve(codeWindow);
-                        }
-                    }, { threshold: 0.6 });
-                    codeObserver.observe(codeWindow);
-                }
-            }
-
-            // --- Fetch GitHub Stats ---
-            async function fetchGitHubStats() {
-                const projectCards = document.querySelectorAll('[data-repo]');
-                
-                for (const card of projectCards) {
-                    const repo = card.dataset.repo;
-                    if (!repo) continue;
-
-                    try {
-                        const response = await fetch(`https://api.github.com/repos/${repo}`);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        const data = await response.json();
-
-                        const starsEl = card.querySelector('.stargazers-count');
-                        const forksEl = card.querySelector('.forks-count');
-
-                        if (starsEl) starsEl.textContent = data.stargazers_count;
-                        if (forksEl) forksEl.textContent = data.forks_count;
-
-                    } catch (error) {
-                        console.error(`Could not fetch GitHub stats for ${repo}:`, error);
-                    }
-                }
-            }
-
-            fetchGitHubStats();
-        });
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>
