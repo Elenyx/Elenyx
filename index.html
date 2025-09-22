@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elenyx - Discord Bot & Application Developer</title>
+    <title>Elenyx - Developer & Creator</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,42 +9,41 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
+    <!-- Highlight.js for Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
     <!-- Custom CSS for theme and animations -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0a0a0a;
-            color: #e8e8e8;
+            color: #a0a0a0;
+            overflow-x: hidden;
         }
 
-        /* Custom gradient text */
-        .gradient-text {
-            background: linear-gradient(135deg, #64ffda, #bb86fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Aurora background effect */
-        .aurora-background {
-            position: relative;
-            overflow: hidden;
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
-        .aurora-background::before {
+        .animated-background::before {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle at 20% 80%, rgba(100, 255, 218, 0.1) 0%, transparent 40%),
-                        radial-gradient(circle at 80% 20%, rgba(187, 134, 252, 0.1) 0%, transparent 40%);
-            animation: aurora-spin 20s linear infinite;
-            z-index: 0;
+            width: 1200px;
+            height: 1200px;
+            background: radial-gradient(circle at 20% 80%, rgba(192, 192, 192, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 20%, rgba(160, 160, 160, 0.05) 0%, transparent 40%);
+            animation: aurora-spin 30s linear infinite;
         }
 
         @keyframes aurora-spin {
@@ -54,445 +51,650 @@
             to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #404040;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #64ffda;
+        .gradient-text {
+            background: linear-gradient(90deg, #e0e0e0, #b0b0b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.3s ease;
         }
 
-        /* Fade-in-up animation */
-        .fade-in-up {
+        .gradient-text:hover {
+            background: linear-gradient(90deg, #ffffff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* Glowing text effects */
+        .glow-text {
+            transition: all 0.3s ease;
+        }
+
+        .glow-text:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.4),
+                         0 0 20px rgba(255, 255, 255, 0.2),
+                         0 0 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .glow-text-blue:hover {
+            color: #58a6ff;
+            text-shadow: 0 0 10px rgba(88, 166, 255, 0.5),
+                         0 0 20px rgba(88, 166, 255, 0.3),
+                         0 0 30px rgba(88, 166, 255, 0.1);
+        }
+
+        .glow-text-teal:hover {
+            color: #3fc0c0;
+            text-shadow: 0 0 10px rgba(63, 192, 192, 0.5),
+                         0 0 20px rgba(63, 192, 192, 0.3),
+                         0 0 30px rgba(63, 192, 192, 0.1);
+        }
+
+        .glow-text-purple:hover {
+            color: #d686ff;
+            text-shadow: 0 0 10px rgba(214, 134, 255, 0.5),
+                         0 0 20px rgba(214, 134, 255, 0.3),
+                         0 0 30px rgba(214, 134, 255, 0.1);
+        }
+
+        /* Enhanced number glow effects */
+        .stat-number {
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .stat-number:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6),
+                         0 0 30px rgba(255, 255, 255, 0.4),
+                         0 0 45px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Soft highlight for headings */
+        .soft-highlight {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .soft-highlight:hover {
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+        
+        .card {
+            background-color: rgba(16, 16, 16, 0.7);
+            border: 1px solid #2a2a2a;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #555;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .tag {
+            background-color: rgba(224, 224, 224, 0.1);
+            color: #c0c0c0;
+            border: 1px solid rgba(224, 224, 224, 0.15);
+        }
+
+        /* Fade-in animation */
+        .fade-in {
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .fade-in-up.visible {
+        .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Project card overlay */
-        .project-card .project-overlay {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .project-card:hover .project-overlay {
-            opacity: 1;
-        }
-
-        /* Code animation styles */
-        .code-keyword { color: #bb86fc; }
-        .code-variable { color: #64ffda; }
-        .code-property { color: #f78c6c; }
-        .code-string { color: #c3e88d; }
+        /* Tech Tag Hover Effect (Preserved) */
+        .tech-tag-group:hover > .tech-tag { opacity: 0.6; filter: grayscale(30%); }
+        .tech-tag-group > .tech-tag:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.05); }
+        .tech-tag { transition: all 0.2s ease-in-out; border: 1px solid transparent; }
+        .tech-tag--blue { background-color: rgba(88, 166, 255, 0.1); color: #58a6ff; }
+        .tech-tag--green { background-color: rgba(63, 185, 80, 0.1); color: #3fb950; }
+        .tech-tag--purple { background-color: rgba(214, 134, 255, 0.1); color: #d686ff; }
+        .tech-tag--orange { background-color: rgba(247, 148, 62, 0.1); color: #f7943e; }
+        .tech-tag--pink { background-color: rgba(247, 129, 182, 0.1); color: #f781b6; }
+        .tech-tag--teal { background-color: rgba(63, 192, 192, 0.1); color: #3fc0c0; }
+        .tech-tag-group:hover > .tech-tag--blue:hover { background-color: rgba(88, 166, 255, 0.2); border-color: #58a6ff; color: #fff; }
+        .tech-tag-group:hover > .tech-tag--green:hover { background-color: rgba(63, 185, 80, 0.2); border-color: #3fb950; color: #fff; }
+        .tech-tag-group:hover > .tech-tag--purple:hover { background-color: rgba(214, 134, 255, 0.2); border-color: #d686ff; color: #fff; }
+        .tech-tag-group:hover > .tech-tag--orange:hover { background-color: rgba(247, 148, 62, 0.2); border-color: #f7943e; color: #fff; }
+        .tech-tag-group:hover > .tech-tag--pink:hover { background-color: rgba(247, 129, 182, 0.2); border-color: #f781b6; color: #fff; }
+        .tech-tag-group:hover > .tech-tag--teal:hover { background-color: rgba(63, 192, 192, 0.2); border-color: #3fc0c0; color: #fff; }
         
+        /* Code Animation Styles */
         .typing-caret::after {
             content: '▋';
             display: inline-block;
             animation: blink 0.7s infinite;
-            color: #64ffda;
-            margin-left: 2px;
-            position: relative;
-            top: 1px;
+            color: #c0c0c0;
         }
 
         @keyframes blink {
             50% { opacity: 0; }
         }
 
-        .tech-logo {
-            filter: grayscale(0.7) brightness(1.2);
-            opacity: 0.9;
-            transition: all 0.3s ease;
-            object-fit: contain;
-            flex-shrink: 0;
+        .tech-icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-color: currentColor;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-position: center;
+            mask-position: center;
         }
-        li:hover .tech-logo {
-            filter: grayscale(0) brightness(1);
-            opacity: 1;
-            transform: scale(1.1);
+
+        /* Syntax Highlighting Customization */
+        #code-animation-content .hljs {
+            background: transparent !important;
+            color: #a0a0a0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
         }
-        .tech-logo:error {
-            display: none;
-        }
+        .hljs-comment { color: #5c6370; font-style: italic; }
+        .hljs-keyword, .hljs-meta, .hljs-selector-tag { color: #c678dd; }
+        .hljs-string, .hljs-number, .hljs-regexp, .hljs-symbol, .hljs-bullet, .hljs-link, .hljs-literal { color: #98c379; }
+        .hljs-title.function_, .hljs-title.class_ { color: #61afef; }
+        .hljs-attr, .hljs-variable, .hljs-template-variable, .hljs-type, .hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-meta-string { color: #e06c75; }
+        .hljs-built_in { color: #e5c07b; }
+
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200">
-
-    <!-- Header / Navigation -->
-    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4 border-b border-transparent">
-                <a href="#home" class="text-2xl font-bold gradient-text">Elenyx</a>
-                <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#about" class="nav-link text-gray-300 hover:text-teal-300 transition-colors">About</a>
-                    <a href="#skills" class="nav-link text-gray-300 hover:text-teal-300 transition-colors">Skills</a>
-                    <a href="#projects" class="nav-link text-gray-300 hover:text-teal-300 transition-colors">Projects</a>
-                    <a href="#contact" class="nav-link text-gray-300 hover:text-teal-300 transition-colors">Contact</a>
-                </nav>
-                <button id="hamburger" class="md:hidden z-50">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4"></path></svg>
-                </button>
-            </div>
-        </div>
-    </header>
+<body class="antialiased">
     
-    <!-- Mobile Navigation -->
-    <div id="nav-menu" class="fixed top-0 left-0 w-full h-full bg-gray-900/95 backdrop-blur-sm flex-col justify-center items-center space-y-8 text-xl hidden md:hidden">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#contact" class="nav-link">Contact</a>
-    </div>
+    <div class="animated-background"></div>
 
-    <main>
+    <main class="relative z-10 container mx-auto px-4 md:px-8">
+
         <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex items-center aurora-background">
-            <div class="container mx-auto px-4 relative z-10">
-                <div class="grid md:grid-cols-2 gap-16 items-center">
-                    <!-- Left Column: Text Content -->
-                    <div class="text-center md:text-left">
-                        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
-                            <span class="block text-gray-400">Hi, I'm Elenyx</span>
-                            <span class="gradient-text">A Passionate Developer</span>
-                        </h1>
-                        <h2 id="typing-role-container" class="text-xl md:text-2xl text-gray-300 font-medium mb-8 min-h-[2.25rem]">
-                            <span id="typing-role" class="typing-caret"></span>
-                        </h2>
-                        <p class="max-w-xl mx-auto md:mx-0 text-gray-400 mb-10">
-                            I build robust, scalable, and community-driven Discord bots and applications, focusing on engaging gameplay mechanics and strong architectural foundations.
-                        </p>
-                        <div class="flex justify-center md:justify-start gap-4">
-                            <a href="#projects" class="px-6 py-3 bg-gradient-to-r from-teal-400 to-purple-500 text-black font-semibold rounded-lg shadow-lg hover:scale-105 transform transition-transform">View My Work</a>
-                            <a href="#contact" class="px-6 py-3 bg-gray-800 border border-gray-700 font-semibold rounded-lg hover:bg-gray-700 transition-colors">Get In Touch</a>
-                        </div>
+        <section id="home" class="min-h-screen flex flex-col justify-center py-20">
+             <div class="grid md:grid-cols-2 gap-16 items-center">
+                 <!-- Left Column: Text Content -->
+                <div class="text-center md:text-left fade-in">
+                    <h1 class="text-5xl md:text-7xl font-extrabold mb-4">
+                        <span class="block text-gray-400">Hi, I'm</span>
+                        <span class="gradient-text">Elenyx</span>
+                    </h1>
+                    <h2 class="text-xl md:text-2xl text-gray-300 font-medium mb-8 min-h-[2.25rem]">
+                        <span id="typing-role" class="typing-caret"></span>
+                    </h2>
+                    <p class="max-w-xl mx-auto md:mx-0 text-lg text-gray-400 mb-10">
+                        Building robust, scalable, and community-driven applications. Specializing in Discord bots, web applications, and modern infrastructure solutions.
+                    </p>
+                    <div class="flex justify-center md:justify-start gap-4">
+                        <a href="#projects" class="px-8 py-3 bg-gray-200 text-black font-semibold rounded-lg shadow-lg hover:bg-white transform transition-all duration-300 hover:scale-105">View Projects</a>
+                        <a href="#contact" class="px-8 py-3 bg-gray-800/50 border border-gray-700 font-semibold rounded-lg hover:bg-gray-700 hover:border-gray-600 transition-colors">Get In Touch</a>
                     </div>
+                </div>
 
-                    <!-- Right Column: Animated Code Window -->
-                    <div class="hidden md:block">
-                        <div class="code-window bg-gray-800/50 border border-gray-700 rounded-lg shadow-2xl backdrop-blur-sm">
-                            <div class="window-header bg-gray-900/80 px-4 py-2 flex items-center gap-2 rounded-t-lg">
-                                <div class="flex gap-1.5">
-                                    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-                                    <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                                </div>
-                                <span class="text-gray-400 text-sm font-medium">elenyx.js</span>
+                 <!-- Right Column: Animated Code Window -->
+                 <div class="hidden md:block fade-in" style="transition-delay: 200ms;">
+                    <div class="code-window bg-black/50 border border-gray-800 rounded-lg shadow-2xl backdrop-blur-sm">
+                        <div class="window-header bg-gray-900/80 px-4 py-2 flex items-center gap-2 rounded-t-lg border-b border-gray-800">
+                            <div class="flex gap-1.5">
+                                <span class="w-3 h-3 bg-gray-700 rounded-full"></span>
+                                <span class="w-3 h-3 bg-gray-700 rounded-full"></span>
+                                <span class="w-3 h-3 bg-gray-700 rounded-full"></span>
                             </div>
-                            <div id="code-animation-content" class="p-6 font-mono text-sm text-left min-h-[170px]">
-                                <!-- Code animation appears here -->
-                            </div>
+                            <span class="text-gray-500 text-sm font-medium" style="font-family: 'Fira Code', monospace;">elenyx.js</span>
+                        </div>
+                        <div id="code-animation-content" class="p-6 font-mono text-sm text-left min-h-[200px] text-gray-400" style="font-family: 'Fira Code', monospace;">
+                            <!-- Code animation appears here -->
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <div class="w-full max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 pt-20 mt-20 border-t border-gray-800 fade-in" style="transition-delay: 400ms;">
+                <!-- Discord Bots -->
+                <div class="stat-card bg-black/50 border border-gray-800 rounded-xl p-6 text-center transition-all duration-300 hover:border-gray-600 hover:-translate-y-1">
+                    <span role="img" aria-label="robot" class="text-4xl mb-4 inline-block">🤖</span>
+                    <p class="stat-number text-4xl font-bold text-gray-200" data-target="3">0+</p>
+                    <p class="text-gray-500 uppercase text-sm tracking-widest mt-2">Discord Bots</p>
+                </div>
+                <!-- Minecraft Plugins -->
+                <div class="stat-card bg-black/50 border border-gray-800 rounded-xl p-6 text-center transition-all duration-300 hover:border-gray-600 hover:-translate-y-1">
+                    <span role="img" aria-label="pickaxe" class="text-4xl mb-4 inline-block">⛏️</span>
+                    <p class="stat-number text-4xl font-bold text-gray-200" data-target="2">0+</p>
+                    <p class="text-gray-500 uppercase text-sm tracking-widest mt-2">Minecraft Plugins</p>
+                </div>
+                <!-- Web Apps -->
+                <div class="stat-card bg-black/50 border border-gray-800 rounded-xl p-6 text-center transition-all duration-300 hover:border-gray-600 hover:-translate-y-1">
+                    <span role="img" aria-label="globe" class="text-4xl mb-4 inline-block">🌐</span>
+                    <p class="stat-number text-4xl font-bold text-gray-200" data-target="5">0+</p>
+                    <p class="text-gray-500 uppercase text-sm tracking-widest mt-2">Web Apps</p>
+                </div>
+                <!-- Tech Stack -->
+                <div class="stat-card bg-black/50 border border-gray-800 rounded-xl p-6 text-center transition-all duration-300 hover:border-gray-600 hover:-translate-y-1">
+                    <span role="img" aria-label="lightning" class="text-4xl mb-4 inline-block">⚡</span>
+                    <p class="stat-number text-4xl font-bold text-gray-200" data-target="15">0+</p>
+                    <p class="text-gray-500 uppercase text-sm tracking-widest mt-2">Tech Stack</p>
+                </div>
+                <!-- Open Source -->
+                <div class="stat-card bg-black/50 border border-gray-800 rounded-xl p-6 text-center transition-all duration-300 hover:border-gray-600 hover:-translate-y-1">
+                    <span role="img" aria-label="rocket" class="text-4xl mb-4 inline-block">🚀</span>
+                    <p class="stat-number text-4xl font-bold text-gray-200" data-target="100">0%</p>
+                    <p class="text-gray-500 uppercase text-sm tracking-widest mt-2">Open Source</p>
                 </div>
             </div>
         </section>
 
-        <!-- About Me Section -->
-        <section id="about" class="py-20 bg-gray-900/50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12 fade-in-up">
-                    <h2 class="text-4xl font-bold mb-2 gradient-text">About Me</h2>
-                    <p class="text-gray-400">Developer, creator, and open-source enthusiast.</p>
-                </div>
-                <div class="grid md:grid-cols-5 gap-10 items-center">
-                    <div class="md:col-span-3 fade-in-up" style="transition-delay: 100ms;">
-                        <p class="text-lg text-gray-300 mb-6">
-                            I'm a dedicated developer specializing in the Discord and Minecraft ecosystems. My passion lies in crafting intricate bots, plugins, and applications that offer rich, engaging experiences for communities. From complex Discord RPGs to dynamic Minecraft plugins and robust management tools, I thrive on solving challenges with clean, scalable code.
-                        </p>
-                        <p class="text-lg text-gray-300">
-                            With a strong foundation in modern technologies like TypeScript, Node.js, and cloud infrastructure, I'm committed to pushing the boundaries of what's possible on the Discord platform and beyond.
-                        </p>
+        <!-- What I Do Section -->
+        <section id="about" class="py-20">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">What I Do</h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto">Passionate about building robust, scalable, and community-driven bots and applications. My projects combine engaging mechanics with strong architectural foundations.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card p-8 rounded-xl fade-in" style="transition-delay: 100ms;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="bg-gray-800/50 p-3 rounded-lg">
+                            <svg width="24" height="24" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="text-gray-300">
+                                <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-200 soft-highlight">Discord Bots & RPGs</h3>
                     </div>
-                    <div class="md:col-span-2 flex justify-center fade-in-up" style="transition-delay: 200ms;">
-                         <div class="w-72 h-72 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 p-2 shadow-2xl">
-                             <div class="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
-                                <!-- Placeholder for an image or logo -->
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-teal-400"><path d="m12 14 4-4"/><path d="m12 14-4-4"/><path d="M3 21v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"/><path d="M3 11V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2"/><path d="M12 19v2"/><path d="M12 5v2"/></svg>
-                             </div>
-                         </div>
+                    <p class="text-gray-400 mb-4">Creator of Nexium RPG - a feature-rich space exploration RPG bot with procedural galaxy exploration, dual economies, PvP/PvE combat, and seasonal events.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag text-sm px-3 py-1 rounded-full">TypeScript</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Node.js</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">PostgreSQL</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Docker</span>
+                    </div>
+                </div>
+                <div class="card p-8 rounded-xl fade-in" style="transition-delay: 200ms;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="bg-gray-800/50 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+                        <h3 class="text-2xl font-bold text-gray-200 soft-highlight">Web Applications</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Full-stack developer building MMO-style Discord gaming applications with React frontends and robust Express backends.</p>
+                     <div class="flex flex-wrap gap-2">
+                        <span class="tag text-sm px-3 py-1 rounded-full">React</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Vite</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Express</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">OAuth2</span>
+                    </div>
+                </div>
+                 <div class="card p-8 rounded-xl fade-in" style="transition-delay: 300ms;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="bg-gray-800/50 p-3 rounded-lg">
+                            <img src="assets/minecraft-block.svg" alt="Minecraft" class="w-6 h-6">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-200 soft-highlight">Minecraft Plugin Development</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Experienced in creating custom Minecraft server plugins with advanced features, player management systems, economy integrations, and seamless server administration tools.</p>
+                     <div class="flex flex-wrap gap-2">
+                        <span class="tag text-sm px-3 py-1 rounded-full">Java</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Bukkit/Spigot</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Maven</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">MySQL</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Vault API</span>
+                    </div>
+                </div>
+                 <div class="card p-8 rounded-xl fade-in" style="transition-delay: 400ms;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="bg-gray-800/50 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div>
+                        <h3 class="text-2xl font-bold text-gray-200 soft-highlight">Infrastructure & Community Tools</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">DevOps enthusiast and creator of TicketMesh - combining scalable cloud architecture, automated CI/CD pipelines, and community management tools with advanced analytics.</p>
+                     <div class="flex flex-wrap gap-2">
+                        <span class="tag text-sm px-3 py-1 rounded-full">Docker</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Kubernetes</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Terraform</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">PostgreSQL</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Analytics</span>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Skills Section -->
+        <!-- Tech Stack Section -->
         <section id="skills" class="py-20">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12 fade-in-up">
-                    <h2 class="text-4xl font-bold mb-2 gradient-text">Tech Stack</h2>
-                    <p class="text-gray-400">The tools and technologies I use to build things.</p>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <!-- Languages -->
-                    <div class="fade-in-up" style="transition-delay: 100ms;">
-                        <h3 class="text-2xl font-semibold mb-4 text-teal-300">Languages</h3>
-                        <ul class="space-y-3 text-gray-300">
-                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/typescript/3178C6" alt="TypeScript" class="w-5 h-5 tech-logo">TypeScript</li>
-                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" class="w-5 h-5 tech-logo">JavaScript</li>
-                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL" class="w-5 h-5 tech-logo">SQL</li>
-                        </ul>
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Tech Stack</h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto">Modern technologies and tools that power my development workflow. Focused on scalability, performance, and developer experience.</p>
+            </div>
+            <div class="space-y-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card p-6 rounded-xl fade-in" style="transition-delay: 100ms;">
+                        <h3 class="text-xl font-bold text-gray-200 mb-4 glow-text-blue">Languages</h3>
+                        <div class="flex flex-wrap gap-3 tech-tag-group">
+                            <span class="tech-tag tech-tag--blue px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/typescript); mask-image: url(https://cdn.simpleicons.org/typescript);"></i>
+                                <span>TypeScript</span>
+                            </span>
+                            <span class="tech-tag tech-tag--blue px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/javascript); mask-image: url(https://cdn.simpleicons.org/javascript);"></i>
+                                <span>JavaScript</span>
+                            </span>
+                             <span class="tech-tag tech-tag--blue px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/mysql); mask-image: url(https://cdn.simpleicons.org/mysql);"></i>
+                                <span>SQL</span>
+                            </span>
+                        </div>
                     </div>
-                    <!-- Frameworks -->
-                    <div class="fade-in-up" style="transition-delay: 200ms;">
-                        <h3 class="text-2xl font-semibold mb-4 text-teal-300">Frameworks</h3>
-                        <ul class="space-y-3 text-gray-300">
-                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/nodedotjs/339933" alt="Node.js" class="w-5 h-5 tech-logo">Node.js</li>
-                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/express/000000" alt="Express" class="w-5 h-5 tech-logo">Express</li>
-                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" class="w-5 h-5 tech-logo">React</li>
-                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/vite/646CFF" alt="Vite" class="w-5 h-5 tech-logo">Vite</li>
-                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/discord/5865F2" alt="Discord.js" class="w-5 h-5 tech-logo">Discord.js</li>
-                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/spigotmc/ED8106" alt="Spigot" class="w-5 h-5 tech-logo">Spigot API</li>
-                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="assets/paper.png" alt="Paper" class="w-5 h-5 tech-logo">Paper API</li>
-                        </ul>
+                    <div class="card p-6 rounded-xl fade-in" style="transition-delay: 200ms;">
+                        <h3 class="text-xl font-bold text-gray-200 mb-4 glow-text-green">Frameworks & Libraries</h3>
+                        <div class="flex flex-wrap gap-3 tech-tag-group">
+                            <span class="tech-tag tech-tag--green px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/nodedotjs); mask-image: url(https://cdn.simpleicons.org/nodedotjs);"></i>
+                                <span>Node.js</span>
+                            </span>
+                            <span class="tech-tag tech-tag--green px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/react); mask-image: url(https://cdn.simpleicons.org/react);"></i>
+                                <span>React</span>
+                            </span>
+                            <span class="tech-tag tech-tag--green px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/express); mask-image: url(https://cdn.simpleicons.org/express);"></i>
+                                <span>Express</span>
+                            </span>
+                            <span class="tech-tag tech-tag--green px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/discord); mask-image: url(https://cdn.simpleicons.org/discord);"></i>
+                                <span>Discord.js</span>
+                            </span>
+                            <span class="tech-tag tech-tag--green px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/vite); mask-image: url(https://cdn.simpleicons.org/vite);"></i>
+                                <span>Vite</span>
+                            </span>
+                        </div>
                     </div>
-                    <!-- Databases -->
-                    <div class="fade-in-up" style="transition-delay: 300ms;">
-                        <h3 class="text-2xl font-semibold mb-4 text-teal-300">Databases</h3>
-                        <ul class="space-y-3 text-gray-300">
-                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL" class="w-5 h-5 tech-logo">PostgreSQL</li>
-                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/prisma/2D3748" alt="Prisma" class="w-5 h-5 tech-logo">Prisma</li>
-                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/drizzle/C5F74F" alt="Drizzle" class="w-5 h-5 tech-logo">Drizzle</li>
-                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/redis/DC382D" alt="Redis" class="w-5 h-5 tech-logo">Redis</li>
-                        </ul>
+                     <div class="card p-6 rounded-xl fade-in" style="transition-delay: 300ms;">
+                        <h3 class="text-xl font-bold text-gray-200 mb-4 glow-text-purple">Databases & ORM</h3>
+                        <div class="flex flex-wrap gap-3 tech-tag-group">
+                            <span class="tech-tag tech-tag--purple px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/postgresql); mask-image: url(https://cdn.simpleicons.org/postgresql);"></i>
+                                <span>PostgreSQL</span>
+                            </span>
+                            <span class="tech-tag tech-tag--purple px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/redis); mask-image: url(https://cdn.simpleicons.org/redis);"></i>
+                                <span>Redis</span>
+                            </span>
+                            <span class="tech-tag tech-tag--purple px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/prisma); mask-image: url(https://cdn.simpleicons.org/prisma);"></i>
+                                <span>Prisma</span>
+                            </span>
+                            <span class="tech-tag tech-tag--purple px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor"><title>Drizzle</title><path d="M5.353 11.823a1.036 1.036 0 0 0-.395-1.422 1.063 1.063 0 0 0-1.437.399L.138 16.702a1.035 1.035 0 0 0 .395 1.422 1.063 1.063 0 0 0 1.437-.398l3.383-5.903Zm11.216 0a1.036 1.036 0 0 0-.394-1.422 1.064 1.064 0 0 0-1.438.399l-3.382 5.902a1.036 1.036 0 0 0 .394 1.422c.506.283 1.15.104 1.438-.398l3.382-5.903Zm7.293-4.525a1.036 1.036 0 0 0-.395-1.422 1.062 1.062 0 0 0-1.437.399l-3.383 5.902a1.036 1.036 0 0 0 .395 1.422 1.063 1.063 0 0 0 1.437-.399l3.383-5.902Zm-11.219 0a1.035 1.035 0 0 0-.394-1.422 1.064 1.064 0 0 0-1.438.398l-3.382 5.903a1.036 1.036 0 0 0 .394 1.422c.506.282 1.15.104 1.438-.399l3.382-5.902Z"/></svg>
+                                <span>Drizzle ORM</span>
+                            </span>
+                        </div>
                     </div>
-                    <!-- DevOps -->
-                    <div class="fade-in-up" style="transition-delay: 400ms;">
-                        <h3 class="text-2xl font-semibold mb-4 text-teal-300">DevOps & Infra</h3>
-                        <ul class="space-y-3 text-gray-300">
-                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker" class="w-5 h-5 tech-logo">Docker</li>
-                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/kubernetes/326CE5" alt="Kubernetes" class="w-5 h-5 tech-logo">Kubernetes</li>
-                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/terraform/7B42BC" alt="Terraform" class="w-5 h-5 tech-logo">Terraform</li>
-                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="w-5 h-5 tech-logo">AWS</li>
-                        </ul>
+                    <div class="card p-6 rounded-xl fade-in" style="transition-delay: 400ms;">
+                        <h3 class="text-xl font-bold text-gray-200 mb-4 glow-text-orange">DevOps & Cloud</h3>
+                        <div class="flex flex-wrap gap-3 tech-tag-group">
+                            <span class="tech-tag tech-tag--orange px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/docker); mask-image: url(https://cdn.simpleicons.org/docker);"></i>
+                                <span>Docker</span>
+                            </span>
+                            <span class="tech-tag tech-tag--orange px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/kubernetes); mask-image: url(https://cdn.simpleicons.org/kubernetes);"></i>
+                                <span>Kubernetes</span>
+                            </span>
+                            <span class="tech-tag tech-tag--orange px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/terraform); mask-image: url(https://cdn.simpleicons.org/terraform);"></i>
+                                <span>Terraform</span>
+                            </span>
+                            <span class="tech-tag tech-tag--orange px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/railway); mask-image: url(https://cdn.simpleicons.org/railway);"></i>
+                                <span>Railway</span>
+                            </span>
+                            <span class="tech-tag tech-tag--orange px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/heroku); mask-image: url(https://cdn.simpleicons.org/heroku);"></i>
+                                <span>Heroku</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card p-6 rounded-xl fade-in" style="transition-delay: 500ms;">
+                        <h3 class="text-xl font-bold text-gray-200 mb-4 glow-text-pink">Monitoring & Quality</h3>
+                        <div class="flex flex-wrap gap-3 tech-tag-group">
+                             <span class="tech-tag tech-tag--pink px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/prometheus); mask-image: url(https://cdn.simpleicons.org/prometheus);"></i>
+                                <span>Prometheus</span>
+                            </span>
+                            <span class="tech-tag tech-tag--pink px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/grafana); mask-image: url(https://cdn.simpleicons.org/grafana);"></i>
+                                <span>Grafana</span>
+                            </span>
+                            <span class="tech-tag tech-tag--pink px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/eslint); mask-image: url(https://cdn.simpleicons.org/eslint);"></i>
+                                <span>ESLint</span>
+                            </span>
+                            <span class="tech-tag tech-tag--pink px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/prettier); mask-image: url(https://cdn.simpleicons.org/prettier);"></i>
+                                <span>Prettier</span>
+                            </span>
+                        </div>
+                    </div>
+                     <div class="card p-6 rounded-xl fade-in" style="transition-delay: 600ms;">
+                        <h3 class="text-xl font-bold text-gray-200 mb-4 glow-text-teal">UI & Design</h3>
+                        <div class="flex flex-wrap gap-3 tech-tag-group">
+                            <span class="tech-tag tech-tag--teal px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/tailwindcss); mask-image: url(https://cdn.simpleicons.org/tailwindcss);"></i>
+                                <span>Tailwind CSS</span>
+                            </span>
+                            <span class="tech-tag tech-tag--teal px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                 <i class="tech-icon" style="-webkit-mask-image: url(https://cdn.simpleicons.org/radixui); mask-image: url(https://cdn.simpleicons.org/radixui);"></i>
+                                <span>Radix UI</span>
+                            </span>
+                            <span class="tech-tag tech-tag--teal px-3 py-1 text-sm rounded-md inline-flex items-center gap-2">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor"><title>shadcn/ui</title><path d="M22.219 11.784 11.784 22.219c-.407.407-.407 1.068 0 1.476.407.407 1.068.407 1.476 0L23.695 13.26c.407-.408.407-1.069 0-1.476-.408-.407-1.069-.407-1.476 0ZM20.132.305.305 20.132c-.407.407-.407 1.068 0 1.476.408.407 1.069.407 1.476 0L21.608 1.781c.407-.407.407-1.068 0-1.476-.408-.407-1.069-.407-1.476 0Z"></path></svg>
+                                <span>Shadcn/ui</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
+        
         <!-- Projects Section -->
-        <section id="projects" class="py-20 bg-gray-900/50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12 fade-in-up">
-                    <h2 class="text-4xl font-bold mb-2 gradient-text">Featured Projects</h2>
-                    <p class="text-gray-400">A selection of my proudest work.</p>
+        <section id="projects" class="py-20">
+             <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Featured Projects</h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto">A showcase of my most impactful open-source projects, demonstrating expertise in full-stack development, DevOps, and community-driven software.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card flex flex-col p-8 rounded-xl fade-in" style="transition-delay: 100ms;" data-repo="elenyx/discord-nexium">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-bold text-gray-200">Nexium RPG Bot</h3>
+                        <div class="flex items-center gap-4 text-gray-500 text-sm pt-1">
+                            <span class="flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <span class="stargazers-count">-</span>
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0v1a6 6 0 0 0 6 6h1a6 6 0 0 0 5-6V8Z"/><path d="M12 2v6"/><path d="M12 15v6"/></svg>
+                                <span class="forks-count">-</span>
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6 flex-grow">Comprehensive space exploration RPG Discord bot with procedural galaxy generation, dual economies, PvP/PvE combat, guilds, and seasonal events. Built with scalable architecture.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="tag text-sm px-3 py-1 rounded-full">TypeScript</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Node.js</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">PostgreSQL</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Redis</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Docker</span>
+                    </div>
+                    <div class="mt-auto">
+                        <a href="https://github.com/Elenyx/discord-nexium" target="_blank" class="w-full text-center flex items-center justify-center gap-2 px-6 py-2.5 bg-gray-800/50 border border-gray-700 font-semibold rounded-lg hover:bg-gray-700 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                            <span>Code</span>
+                        </a>
+                    </div>
                 </div>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Project 1: Nexium RPG -->
-                    <div class="project-card bg-gray-800 rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-2 transition-transform duration-300 fade-in-up" style="transition-delay: 100ms;">
-                        <div class="relative">
-                           <img src="https://placehold.co/600x400/0a0a0a/64ffda?text=Nexium+RPG" alt="Nexium RPG" class="w-full h-48 object-cover">
-                           <div class="project-overlay absolute inset-0 bg-black/70 flex items-center justify-center gap-4">
-                               <a href="https://github.com/Elenyx/discord-nexium" target="_blank" class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center hover:bg-teal-400 hover:text-black transition-colors" title="View Code on GitHub">
-                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
-                               </a>
-                           </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-white">Nexium RPG</h3>
-                            <p class="text-gray-400 mb-4 text-sm">A feature-rich space exploration RPG bot for Discord with procedural galaxy exploration, PvP/PvE, guilds, and more.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="text-xs bg-teal-900/50 text-teal-300 px-2 py-1 rounded-full">TypeScript</span>
-                                <span class="text-xs bg-teal-900/50 text-teal-300 px-2 py-1 rounded-full">Node.js</span>
-                                <span class="text-xs bg-teal-900/50 text-teal-300 px-2 py-1 rounded-full">PostgreSQL</span>
-                                <span class="text-xs bg-teal-900/50 text-teal-300 px-2 py-1 rounded-full">Docker</span>
-                            </div>
+                <!-- Project 2 -->
+                <div class="card flex flex-col p-8 rounded-xl fade-in" style="transition-delay: 200ms;" data-repo="elenyx/friendly-eureka">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-bold text-gray-200">Space MMO Web App</h3>
+                        <div class="flex items-center gap-4 text-gray-500 text-sm pt-1">
+                            <span class="flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <span class="stargazers-count">-</span>
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0v1a6 6 0 0 0 6 6h1a6 6 0 0 0 5-6V8Z"/><path d="M12 2v6"/><path d="M12 15v6"/></svg>
+                                <span class="forks-count">-</span>
+                            </span>
                         </div>
                     </div>
-
-                    <!-- Project 2: Friendly Eureka -->
-                    <div class="project-card bg-gray-800 rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-2 transition-transform duration-300 fade-in-up" style="transition-delay: 200ms;">
-                        <div class="relative">
-                           <img src="https://placehold.co/600x400/0a0a0a/bb86fc?text=Friendly+Eureka" alt="Friendly Eureka" class="w-full h-48 object-cover">
-                           <div class="project-overlay absolute inset-0 bg-black/70 flex items-center justify-center gap-4">
-                               <a href="https://github.com/Elenyx/friendly-eureka" target="_blank" class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center hover:bg-purple-400 hover:text-black transition-colors" title="View Code on GitHub">
-                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
-                               </a>
-                           </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-white">Friendly Eureka</h3>
-                            <p class="text-gray-400 mb-4 text-sm">Space MMO-style Discord bot and web application with a React SPA frontend and an Express backend.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full">React</span>
-                                <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full">Vite</span>
-                                <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full">OAuth2</span>
-                                <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full">Express</span>
-                            </div>
+                    <p class="text-gray-400 mb-6 flex-grow">Full-stack space MMO-style application with React SPA frontend and Express backend. Features Discord OAuth2, real-time updates, and modern UI/UX design patterns.</p>
+                     <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="tag text-sm px-3 py-1 rounded-full">React</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Vite</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Express</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">PostgreSQL</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Tailwind</span>
+                    </div>
+                     <div class="mt-auto">
+                        <a href="https://github.com/Elenyx/friendly-eureka" target="_blank" class="w-full text-center flex items-center justify-center gap-2 px-6 py-2.5 bg-gray-800/50 border border-gray-700 font-semibold rounded-lg hover:bg-gray-700 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                            <span>Code</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="card flex flex-col p-8 rounded-xl fade-in" style="transition-delay: 300ms;" data-repo="elenyx/TicketMesh">
+                     <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-bold text-gray-200">Advanced Ticket Bot</h3>
+                        <div class="flex items-center gap-4 text-gray-500 text-sm pt-1">
+                            <span class="flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <span class="stargazers-count">-</span>
+                            </span>
+                            <span class="flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0v1a6 6 0 0 0 6 6h1a6 6 0 0 0 5-6V8Z"/><path d="M12 2v6"/><path d="M12 15v6"/></svg>
+                                <span class="forks-count">-</span>
+                            </span>
                         </div>
                     </div>
-
-                    <!-- Project 3: TicketMesh -->
-                    <div class="project-card bg-gray-800 rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-2 transition-transform duration-300 fade-in-up" style="transition-delay: 300ms;">
-                         <div class="relative">
-                           <img src="https://placehold.co/600x400/0a0a0a/e8e8e8?text=TicketMesh" alt="TicketMesh" class="w-full h-48 object-cover">
-                           <div class="project-overlay absolute inset-0 bg-black/70 flex items-center justify-center gap-4">
-                               <a href="https://github.com/Elenyx/TicketMesh" target="_blank" class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center hover:bg-gray-300 hover:text-black transition-colors" title="View Code on GitHub">
-                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
-                               </a>
-                           </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-white">TicketMesh</h3>
-                            <p class="text-gray-400 mb-4 text-sm">Advanced Discord ticket management bot with persistent storage, transcript generation, and analytics.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full">Java</span>
-                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full">JDA</span>
-                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full">PostgreSQL</span>
-                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full">Analytics</span>
-                            </div>
-                        </div>
+                    <p class="text-gray-400 mb-6 flex-grow">Enterprise-grade Discord ticket management system with automated channel creation, persistent storage, transcript generation, analytics dashboards, and role-based permissions.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="tag text-sm px-3 py-1 rounded-full">PostgreSQL</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Docker</span>
+                        <span class="tag text-sm px-3 py-1 rounded-full">Analytics</span>
+                    </div>
+                     <div class="mt-auto">
+                        <a href="https://github.com/Elenyx/TicketMesh" target="_blank" class="w-full text-center flex items-center justify-center gap-2 px-6 py-2.5 bg-gray-800/50 border border-gray-700 font-semibold rounded-lg hover:bg-gray-700 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                            <span>Code</span>
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
-
+        
         <!-- Contact Section -->
         <section id="contact" class="py-20">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12 fade-in-up">
-                    <h2 class="text-4xl font-bold mb-2 gradient-text">Let's Connect</h2>
-                    <p class="text-gray-400 max-w-lg mx-auto">I'm open to collaboration and new opportunities. Feel free to reach out!</p>
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Let's Connect</h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto">Interested in collaborating on a project, discussing tech, or just saying hello? I'd love to hear from you.</p>
+            </div>
+             <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <a href="https://github.com/Elenyx" target="_blank" class="card p-8 rounded-xl text-center fade-in" style="transition-delay: 100ms;">
+                    <div class="mb-4 inline-block text-gray-400"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></div>
+                    <h3 class="text-xl font-bold text-gray-200 glow-text-blue">GitHub</h3>
+                    <p class="text-gray-500">Explore my open source projects</p>
+                </a>
+                <div class="card p-8 rounded-xl text-center fade-in" style="transition-delay: 200ms;">
+                    <div class="mb-4 inline-block text-gray-400">
+                        <svg width="32" height="32" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                            <title>Discord</title>
+                            <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-200 glow-text-purple">Discord</h3>
+                    <p class="text-gray-500">Connect on Discord</p>
                 </div>
-                <div class="max-w-xl mx-auto bg-gray-800/50 border border-gray-700 p-8 rounded-lg shadow-2xl fade-in-up" style="transition-delay: 200ms;">
-                    <form id="contact-form">
-                        <div class="mb-4">
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-300">Name</label>
-                            <input type="text" id="name" name="name" class="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-2 focus:ring-teal-400 focus:border-teal-400 transition" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-300">Email</label>
-                            <input type="email" id="email" name="email" class="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-2 focus:ring-teal-400 focus:border-teal-400 transition" required>
-                        </div>
-                        <div class="mb-6">
-                            <label for="message" class="block mb-2 text-sm font-medium text-gray-300">Message</label>
-                            <textarea id="message" name="message" rows="4" class="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-2 focus:ring-teal-400 focus:border-teal-400 transition" required></textarea>
-                        </div>
-                        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-teal-400 to-purple-500 text-black font-semibold rounded-lg shadow-lg hover:scale-105 transform transition-transform">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
+                 <a href="mailto:contact@elenyx.dev" class="card p-8 rounded-xl text-center fade-in" style="transition-delay: 300ms;">
+                    <div class="mb-4 inline-block text-gray-400"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+                    <h3 class="text-xl font-bold text-gray-200 glow-text-teal">Email</h3>
+                    <p class="text-gray-500">Get in touch via email</p>
+                </a>
+            </div>
+            
+            <div class="card p-8 md:p-12 rounded-xl text-center max-w-4xl mx-auto fade-in" style="transition-delay: 400ms;">
+                 <h3 class="text-3xl font-bold text-gray-200 mb-4 soft-highlight">Open to Opportunities</h3>
+                 <p class="text-gray-400 mb-8 text-lg">Currently exploring new opportunities in full-stack development, DevOps engineering, and Discord bot development. Always excited to work on innovative projects with passionate teams.</p>
+                 <a href="mailto:contact@elenyx.dev" class="inline-block px-8 py-3 bg-gray-200 text-black font-semibold rounded-lg shadow-lg hover:bg-white transform transition-all duration-300 hover:scale-105">Start a Conversation</a>
             </div>
         </section>
+
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-t border-gray-700">
-        <div class="container mx-auto px-4 py-12">
-            <!-- Main Footer Content -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <!-- About Section -->
-                <div class="text-center md:text-left">
-                    <h3 class="text-xl font-bold text-white mb-4">Elenyx</h3>
-                    <p class="text-gray-400 mb-4">Full-stack developer passionate about creating innovative solutions and contributing to the open source community.</p>
-                    <div class="flex justify-center md:justify-start gap-4">
-                        <a href="https://github.com/Elenyx" target="_blank" class="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110" title="GitHub">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
-                        </a>
-                        <a href="https://linkedin.com/in/elenyx" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 transform hover:scale-110" title="LinkedIn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                        </a>
-                        <a href="https://twitter.com/elenyx" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 transform hover:scale-110" title="Twitter">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-                        </a>
-                        <a href="mailto:contact@elenyx.dev" class="text-gray-400 hover:text-teal-400 transition-all duration-300 transform hover:scale-110" title="Email">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="text-center md:text-left">
-                    <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#about" class="text-gray-400 hover:text-teal-300 transition-colors">About</a></li>
-                        <li><a href="#projects" class="text-gray-400 hover:text-teal-300 transition-colors">Projects</a></li>
-                        <li><a href="#skills" class="text-gray-400 hover:text-teal-300 transition-colors">Skills</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-teal-300 transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-
-                <!-- Tech Stack Highlights -->
-                <div class="text-center md:text-left">
-                    <h3 class="text-lg font-semibold text-white mb-4">Tech Focus</h3>
-                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
-                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Java</span>
-                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">React</span>
-                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Node.js</span>
-                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">PostgreSQL</span>
-                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">AWS</span>
-                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Docker</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Bar -->
-            <div class="border-t border-gray-700 pt-6">
-                <div class="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
-                    <div class="mb-4 md:mb-0">
-                        <p>&copy; 2025 Elenyx. All rights reserved.</p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <span class="flex items-center gap-2">
-                            <span>Designed & Built with</span>
-                            <span class="text-red-400 animate-pulse">❤️</span>
-                            <span>for the open source community</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
+    <footer class="border-t border-gray-800 mt-20">
+        <div class="container mx-auto px-4 md:px-8 py-8 text-center text-gray-600">
+            <p>&copy; 2025 Elenyx. All rights reserved. Designed with inspiration and built for the open-source community.</p>
         </div>
     </footer>
     
-    <!-- Notification container -->
-    <div id="notification-container" class="fixed bottom-5 right-5 z-50"></div>
-
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Navigation ---
-            const navbar = document.getElementById('navbar');
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('nav-menu');
-            const navLinks = document.querySelectorAll('.nav-link');
+            // --- Intersection Observer for Fade-in animations ---
+            const animatedElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // If the element is a stat card, trigger the count-up animation
+                        if (entry.target.classList.contains('stat-card')) {
+                             const numberEl = entry.target.querySelector('.stat-number');
+                             if (numberEl && !numberEl.dataset.animated) {
+                                 animateCountUp(numberEl);
+                             }
+                        }
 
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('bg-gray-900/80', 'backdrop-blur-sm', 'border-b', 'border-gray-800');
-                } else {
-                    navbar.classList.remove('bg-gray-900/80', 'backdrop-blur-sm', 'border-b', 'border-gray-800');
-                }
-            });
-
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('hidden');
-                navMenu.classList.toggle('flex');
-            });
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    if (navMenu.classList.contains('flex')) {
-                        navMenu.classList.add('hidden');
-                        navMenu.classList.remove('flex');
+                        observer.unobserve(entry.target);
                     }
                 });
-            });
+            }, { threshold: 0.1 });
+            
+            // Add stat cards to the observer
+            document.querySelectorAll('.stat-card').forEach(el => observer.observe(el));
+            animatedElements.forEach(el => observer.observe(el));
+
+            // --- Animate Count Up ---
+            function animateCountUp(el) {
+                const target = parseInt(el.dataset.target, 10);
+                const isPercent = el.textContent.includes('%');
+                el.dataset.animated = 'true';
+                let count = 0;
+                const duration = 1500; // ms
+                const frameDuration = 1000 / 60; // 60fps
+                const totalFrames = Math.round(duration / frameDuration);
+                const increment = target / totalFrames;
+
+                const counter = setInterval(() => {
+                    count += increment;
+                    if (count >= target) {
+                        el.textContent = isPercent ? target + '%' : target + '+';
+                        clearInterval(counter);
+                    } else {
+                        el.textContent = isPercent ? Math.ceil(count) + '%' : Math.ceil(count) + '+';
+                    }
+                }, frameDuration);
+            }
 
             // --- Role Typing Animation ---
             const typingRole = document.getElementById('typing-role');
             if (typingRole) {
-                const roles = ['Discord Bot Developer', 'Minecraft Plugin Dev', 'TypeScript Expert', 'Backend Architect', 'Open Source Contributor'];
+                const roles = ['Discord Bot Developer', 'Full-Stack Engineer', 'TypeScript Expert', 'Backend Architect', 'Open Source Contributor'];
                 let roleIndex = 0;
                 let charIndex = 0;
                 let isDeleting = false;
@@ -516,7 +718,6 @@
                         isDeleting = false;
                         roleIndex = (roleIndex + 1) % roles.length;
                     }
-
                     setTimeout(typeRole, typeSpeed);
                 }
                 setTimeout(typeRole, 500);
@@ -524,159 +725,95 @@
 
             // --- Code Window Typing Animation ---
             const codeContainer = document.getElementById('code-animation-content');
-            const codeContent = [
-                [
-                    { text: 'const ', class: 'code-keyword' },
-                    { text: 'elenyx ', class: 'code-variable' },
-                    { text: '= {', class: '' }
-                ],
-                [
-                    { text: '  name', class: 'code-property' },
-                    { text: ': ', class: '' },
-                    { text: "'Elenyx'", class: 'code-string' },
-                    { text: ',', class: '' }
-                ],
-                [
-                    { text: '  focus', class: 'code-property' },
-                    { text: ': [', class: '' },
-                    { text: "'Discord Bots'", class: 'code-string' },
-                    { text: ', ', class: '' },
-                    { text: "'Minecraft Plugins'", class: 'code-string' },
-                    { text: ', ', class: '' },
-                    { text: "'Web Apps'", class: 'code-string' },
-                    { text: '],', class: '' }
-                ],
-                [
-                    { text: '  passion', class: 'code-property' },
-                    { text: ': ', class: '' },
-                    { text: "'Building for Communities'", class: 'code-string' }
-                ],
-                [
-                    { text: '};', class: '' }
-                ]
-            ];
+            if (codeContainer) {
+                const codeSnippets = [
+                    { language: 'javascript', code: `// Discord Bot Development\nconst bot = new Client({\n  intents: [GatewayIntentBits.Guilds]\n});\nbot.login(process.env.TOKEN);` },
+                    { language: 'java', code: `// Minecraft Plugin\n@EventHandler\npublic void onPlayerJoin(PlayerJoinEvent e) {\n  Player p = e.getPlayer();\n  p.sendMessage("Welcome!");\n}` },
+                    { language: 'javascript', code: `// Web Application\nconst [gameState, setGameState] = useState({\n  players: [],\n  galaxies: generateGalaxies(),\n  economy: initEconomy()\n});` },
+                    { language: 'sql', code: `/* Database Schema */\nCREATE TABLE users (\n  id SERIAL PRIMARY KEY,\n  discord_id BIGINT UNIQUE,\n  credits INTEGER DEFAULT 0\n);` }
+                ];
 
-            function sleep(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
+                let snippetIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
 
-            async function typeCodeAnimation() {
-                if(!codeContainer) return;
-                codeContainer.innerHTML = ''; // Clear previous animation
-                
-                for (const line of codeContent) {
-                    const lineEl = document.createElement('div');
-                    lineEl.className = "flex";
-                    codeContainer.appendChild(lineEl);
+                function typeCode() {
+                    const currentSnippet = codeSnippets[snippetIndex];
+                    let typeSpeed = isDeleting ? 30 : 60;
+
+                    const displayedText = currentSnippet.code.substring(0, charIndex);
                     
-                    for (const token of line) {
-                        const tokenEl = document.createElement('span');
-                        if (token.class) {
-                            tokenEl.className = token.class;
+                    codeContainer.innerHTML = `<pre><code class="language-${currentSnippet.language}"></code></pre>`;
+                    const codeElement = codeContainer.querySelector('code');
+                    codeElement.textContent = displayedText;
+
+                    hljs.highlightElement(codeElement);
+                    
+                    if (!isDeleting && charIndex === currentSnippet.code.length) {
+                        // Pause at the end, caret stops blinking
+                    } else {
+                        codeElement.innerHTML += '<span class="typing-caret"></span>';
+                    }
+
+                    if (!isDeleting && charIndex < currentSnippet.code.length) {
+                        charIndex++;
+                    } else if (isDeleting && charIndex > 0) {
+                        charIndex--;
+                    } else if (!isDeleting && charIndex === currentSnippet.code.length) {
+                        setTimeout(() => { isDeleting = true; }, 2500); 
+                    } else if (isDeleting && charIndex === 0) {
+                        isDeleting = false;
+                        snippetIndex = (snippetIndex + 1) % codeSnippets.length;
+                    }
+                    
+                    setTimeout(typeCode, typeSpeed);
+                }
+                
+                // Trigger code animation on scroll
+                const codeWindow = document.querySelector('.code-window');
+                if (codeWindow) {
+                    const codeObserver = new IntersectionObserver((entries) => {
+                        if (entries[0].isIntersecting && !codeWindow.dataset.animated) {
+                            typeCode();
+                            codeWindow.dataset.animated = 'true';
+                            codeObserver.unobserve(codeWindow);
                         }
-                        lineEl.appendChild(tokenEl);
-                        
-                        for (let i = 0; i < token.text.length; i++) {
-                            await sleep(40 + Math.random() * 40);
-                            tokenEl.textContent += token.text[i];
+                    }, { threshold: 0.6 });
+                    codeObserver.observe(codeWindow);
+                }
+            }
+
+            // --- Fetch GitHub Stats ---
+            async function fetchGitHubStats() {
+                const projectCards = document.querySelectorAll('[data-repo]');
+                
+                for (const card of projectCards) {
+                    const repo = card.dataset.repo;
+                    if (!repo) continue;
+
+                    try {
+                        const response = await fetch(`https://api.github.com/repos/${repo}`);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
                         }
+                        const data = await response.json();
+
+                        const starsEl = card.querySelector('.stargazers-count');
+                        const forksEl = card.querySelector('.forks-count');
+
+                        if (starsEl) starsEl.textContent = data.stargazers_count;
+                        if (forksEl) forksEl.textContent = data.forks_count;
+
+                    } catch (error) {
+                        console.error(`Could not fetch GitHub stats for ${repo}:`, error);
                     }
                 }
-                const lastLine = codeContainer.lastChild;
-                if (lastLine) {
-                    lastLine.innerHTML += '<span class="typing-caret"></span>';
-                }
             }
 
-            // --- Intersection Observers ---
-            const animatedElements = document.querySelectorAll('.fade-in-up');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            animatedElements.forEach(el => observer.observe(el));
-
-            const codeWindow = document.querySelector('.code-window');
-            if (codeWindow) {
-                const codeObserver = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting && !codeWindow.dataset.animated) {
-                        typeCodeAnimation();
-                        codeWindow.dataset.animated = 'true';
-                        codeObserver.unobserve(codeWindow);
-                    }
-                }, { threshold: 0.6 });
-                codeObserver.observe(codeWindow);
-            }
-
-
-            // --- Contact Form ---
-            const contactForm = document.getElementById('contact-form');
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const submitBtn = contactForm.querySelector('button[type="submit"]');
-                const originalText = submitBtn.textContent;
-                
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending...';
-
-                setTimeout(() => {
-                    showNotification('Message sent successfully! I\'ll be in touch soon.', 'success');
-                    contactForm.reset();
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalText;
-                }, 1500);
-            });
-            
-            function showNotification(message, type) {
-                const container = document.getElementById('notification-container');
-                const notification = document.createElement('div');
-                const bgColor = type === 'success' ? 'bg-teal-500' : 'bg-red-500';
-
-                notification.className = `px-4 py-3 rounded-lg text-white shadow-lg ${bgColor} transform transition-all duration-300 translate-y-4 opacity-0`;
-                notification.textContent = message;
-                
-                container.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.classList.remove('translate-y-4', 'opacity-0');
-                }, 10);
-
-                setTimeout(() => {
-                    notification.classList.add('opacity-0');
-                    notification.addEventListener('transitionend', () => notification.remove());
-                }, 5000);
-            }
-
-            // Handle broken tech logo images
-            document.querySelectorAll('.tech-logo').forEach(img => {
-                img.addEventListener('error', function() {
-                    // Create a simple colored circle as fallback
-                    if (this.parentNode) {
-                        const fallback = document.createElement('div');
-                        fallback.className = 'w-5 h-5 rounded-full bg-gradient-to-r from-teal-400 to-purple-500 flex-shrink-0';
-                        fallback.style.minWidth = '20px';
-                        fallback.style.minHeight = '20px';
-                        this.parentNode.replaceChild(fallback, this);
-                    }
-                });
-                
-                // Preload images to catch errors early
-                const testImg = new Image();
-                testImg.onload = () => {
-                    img.style.opacity = '0.9';
-                };
-                testImg.onerror = () => {
-                    img.dispatchEvent(new Event('error'));
-                };
-                testImg.src = img.src;
-            });
+            fetchGitHubStats();
         });
     </script>
+
 </body>
 </html>
 
