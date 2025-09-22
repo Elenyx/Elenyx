@@ -1,6 +1,14 @@
 # Hi, I'm Elenyx 👋
 
-Welcome to my GitHub profile! I'm a passionate developer with a focus on building robust, scalable, and community-driven bots and applications, especially for Discord. My projects combine engaging gameplay mechanics, strong architectural foundations, and a commitment to open source collaboration.
+![Profile Views](https://komarev.com/ghpvc/?username=Elenyx&color=blue)
+[![Discord Nexium CI](https://github.com/Elenyx/discord-nexium/actions/workflows/ci.yml/badge.svg)](https://github.com/Elenyx/discord-nexium/actions)
+[![Top Lang](https://img.shields.io/github/languages/top/Elenyx/discord-nexium?color=orange)](https://github.com/Elenyx/discord-nexium)
+[![Stars](https://img.shields.io/github/stars/Elenyx/discord-nexium?style=social)](https://github.com/Elenyx/discord-nexium/stargazers)
+[![Forks](https://img.shields.io/github/forks/Elenyx/discord-nexium?style=social)](https://github.com/Elenyx/discord-nexium/network/members)
+
+---
+
+Welcome to my GitHub profile! I'm a passionate developer focused on building robust, scalable, and community-driven bots and applications, especially for Discord. My projects combine engaging gameplay mechanics, strong architectural foundations, and a commitment to open source collaboration.
 
 ---
 
