@@ -1,437 +1,682 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elenyx - Developer Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Elenyx - Discord Bot & Application Developer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS for theme and animations -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e8e8e8;
+        }
+
+        /* Custom gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #64ffda, #bb86fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Aurora background effect */
+        .aurora-background {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .aurora-background::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle at 20% 80%, rgba(100, 255, 218, 0.1) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 20%, rgba(187, 134, 252, 0.1) 0%, transparent 40%);
+            animation: aurora-spin 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes aurora-spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #404040;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64ffda;
+        }
+
+        /* Fade-in-up animation */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Project card overlay */
+        .project-card .project-overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        /* Code animation styles */
+        .code-keyword { color: #bb86fc; }
+        .code-variable { color: #64ffda; }
+        .code-property { color: #f78c6c; }
+        .code-string { color: #c3e88d; }
+        
+        .typing-caret::after {
+            content: '▋';
+            display: inline-block;
+            animation: blink 0.7s infinite;
+            color: #64ffda;
+            margin-left: 2px;
+            position: relative;
+            top: 1px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .tech-logo {
+            filter: grayscale(0.7) brightness(1.2);
+            opacity: 0.9;
+            transition: all 0.3s ease;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        li:hover .tech-logo {
+            filter: grayscale(0) brightness(1);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        .tech-logo:error {
+            display: none;
+        }
+    </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <span class="logo-text">EX</span>
-            </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#projects" class="nav-link">Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#skills" class="nav-link">Skills</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
-                </li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+<body class="bg-gray-900 text-gray-200">
+
+    <!-- Header / Navigation -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4 border-b border-transparent">
+                <a href="#home" class="text-2xl font-bold gradient-text">Elenyx</a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="nav-link text-gray-300 hover:text-teal-300 transition-colors">About</a>
+                    <a href="#skills" class="nav-link text-gray-300 hover:text-teal-300 transition-colors">Skills</a>
+                    <a href="#projects" class="nav-link text-gray-300 hover:text-teal-300 transition-colors">Projects</a>
+                    <a href="#contact" class="nav-link text-gray-300 hover:text-teal-300 transition-colors">Contact</a>
+                </nav>
+                <button id="hamburger" class="md:hidden z-50">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4"></path></svg>
+                </button>
             </div>
         </div>
-    </nav>
+    </header>
+    
+    <!-- Mobile Navigation -->
+    <div id="nav-menu" class="fixed top-0 left-0 w-full h-full bg-gray-900/95 backdrop-blur-sm flex-col justify-center items-center space-y-8 text-xl hidden md:hidden">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#contact" class="nav-link">Contact</a>
+    </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        <span class="title-line">Hi, I'm</span>
-                        <span class="title-name">Elenyx</span>
-                        <span class="title-role">Discord Bot Developer</span>
-                    </h1>
-                    <p class="hero-description">
-                        I build robust, scalable, and community-driven Discord bots and applications. 
-                        Passionate about creating engaging gameplay mechanics and strong architectural foundations.
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="#projects" class="btn btn-primary">View My Work</a>
-                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="code-window">
-                        <div class="window-header">
-                            <div class="window-controls">
-                                <span class="control close"></span>
-                                <span class="control minimize"></span>
-                                <span class="control maximize"></span>
-                            </div>
-                            <span class="window-title">portfolio.js</span>
-                        </div>
-                        <div class="code-content">
-                            <div class="code-line">
-                                <span class="line-number">1</span>
-                                <span class="code-text"><span class="keyword">const</span> <span class="variable">developer</span> = {</span>
-                            </div>
-                            <div class="code-line">
-                                <span class="line-number">2</span>
-                                <span class="code-text">  <span class="property">name</span>: <span class="string typing-animation">'Elenyx'</span>,</span>
-                            </div>
-                            <div class="code-line">
-                                <span class="line-number">3</span>
-                                <span class="code-text">  <span class="property">skills</span>: [<span class="string">'Discord.js'</span>, <span class="string">'TypeScript'</span>, <span class="string">'Java'</span>],</span>
-                            </div>
-                            <div class="code-line">
-                                <span class="line-number">4</span>
-                                <span class="code-text">  <span class="property">passion</span>: <span class="string">'Building Discord bots'</span></span>
-                            </div>
-                            <div class="code-line">
-                                <span class="line-number">5</span>
-                                <span class="code-text">};</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="scroll-indicator">
-                <div class="scroll-arrow"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">Passionate developer with a love for clean code and user experience</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p class="about-text">
-                        I'm a passionate developer focused on building robust, scalable, and community-driven 
-                        bots and applications, especially for Discord. My projects combine engaging gameplay 
-                        mechanics, strong architectural foundations, and a commitment to open source collaboration.
-                    </p>
-                    <p>
-                        I specialize in Discord bots & RPGs, web applications, and community support tools. 
-                        My work spans from space exploration RPG bots to full-stack MMO-style applications, 
-                        all built with modern technologies and scalable infrastructure.
-                    </p>
-                    <div class="stats">
-                        <div class="stat">
-                            <span class="stat-number">3+</span>
-                            <span class="stat-label">Major Projects</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">Discord</span>
-                            <span class="stat-label">Bot Specialist</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">Open</span>
-                            <span class="stat-label">Source Advocate</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="image-placeholder">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Skills & Technologies</h2>
-                <p class="section-subtitle">Tools and technologies I work with</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Languages</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">TypeScript</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">SQL</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Frameworks</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Express</span>
-                        <span class="skill-tag">Discord.js</span>
-                        <span class="skill-tag">JDA</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Infrastructure</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Kubernetes</span>
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">Redis</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">A showcase of my recent work and side projects</p>
-            </div>
-            <div class="project-filters">
-                <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="discord">Discord Bots</button>
-                <button class="filter-btn" data-filter="web">Web Apps</button>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card" data-category="web">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <div class="project-links">
-                                <a href="#" class="project-link" data-project="1">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">E-Commerce Platform</h3>
-                        <p class="project-description">
-                            A full-stack e-commerce solution built with React and Node.js, featuring 
-                            real-time inventory management and secure payment processing.
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center aurora-background">
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <!-- Left Column: Text Content -->
+                    <div class="text-center md:text-left">
+                        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
+                            <span class="block text-gray-400">Hi, I'm Elenyx</span>
+                            <span class="gradient-text">A Passionate Developer</span>
+                        </h1>
+                        <h2 id="typing-role-container" class="text-xl md:text-2xl text-gray-300 font-medium mb-8 min-h-[2.25rem]">
+                            <span id="typing-role" class="typing-caret"></span>
+                        </h2>
+                        <p class="max-w-xl mx-auto md:mx-0 text-gray-400 mb-10">
+                            I build robust, scalable, and community-driven Discord bots and applications, focusing on engaging gameplay mechanics and strong architectural foundations.
                         </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">MongoDB</span>
-                            <span class="tech-tag">Stripe</span>
+                        <div class="flex justify-center md:justify-start gap-4">
+                            <a href="#projects" class="px-6 py-3 bg-gradient-to-r from-teal-400 to-purple-500 text-black font-semibold rounded-lg shadow-lg hover:scale-105 transform transition-transform">View My Work</a>
+                            <a href="#contact" class="px-6 py-3 bg-gray-800 border border-gray-700 font-semibold rounded-lg hover:bg-gray-700 transition-colors">Get In Touch</a>
                         </div>
                     </div>
-                </div>
 
-                <div class="project-card" data-category="mobile">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <div class="project-links">
-                                <a href="#" class="project-link" data-project="2">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
+                    <!-- Right Column: Animated Code Window -->
+                    <div class="hidden md:block">
+                        <div class="code-window bg-gray-800/50 border border-gray-700 rounded-lg shadow-2xl backdrop-blur-sm">
+                            <div class="window-header bg-gray-900/80 px-4 py-2 flex items-center gap-2 rounded-t-lg">
+                                <div class="flex gap-1.5">
+                                    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                                </div>
+                                <span class="text-gray-400 text-sm font-medium">elenyx.js</span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Task Management App</h3>
-                        <p class="project-description">
-                            A cross-platform mobile app for team collaboration and project management 
-                            with real-time synchronization and offline support.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">React Native</span>
-                            <span class="tech-tag">Firebase</span>
-                            <span class="tech-tag">Redux</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card" data-category="api">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <div class="project-links">
-                                <a href="#" class="project-link" data-project="3">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
+                            <div id="code-animation-content" class="p-6 font-mono text-sm text-left min-h-[170px]">
+                                <!-- Code animation appears here -->
                             </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Weather Analytics API</h3>
-                        <p class="project-description">
-                            RESTful API providing weather data analytics with machine learning 
-                            predictions and historical data visualization capabilities.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">FastAPI</span>
-                            <span class="tech-tag">PostgreSQL</span>
-                            <span class="tech-tag">ML</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card" data-category="web">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <div class="project-links">
-                                <a href="#" class="project-link" data-project="4">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Social Media Dashboard</h3>
-                        <p class="project-description">
-                            Analytics dashboard for social media management with real-time metrics, 
-                            automated reporting, and multi-platform integration.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Vue.js</span>
-                            <span class="tech-tag">D3.js</span>
-                            <span class="tech-tag">Express</span>
-                            <span class="tech-tag">Redis</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Let's Work Together</h2>
-                <p class="section-subtitle">Ready to bring your ideas to life? Let's discuss your next project</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <p class="contact-description">
-                        Open to collaboration, feedback, and contributions. Let's connect and build 
-                        something amazing for the Discord community together.
-                    </p>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <span class="contact-icon">💬</span>
-                        </div>
-                        <div class="contact-details">
-                            <h4>GitHub Discussions</h4>
-                            <p>GitHub Discussions</p>
-                        </div>
+        <!-- About Me Section -->
+        <section id="about" class="py-20 bg-gray-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12 fade-in-up">
+                    <h2 class="text-4xl font-bold mb-2 gradient-text">About Me</h2>
+                    <p class="text-gray-400">Developer, creator, and open-source enthusiast.</p>
+                </div>
+                <div class="grid md:grid-cols-5 gap-10 items-center">
+                    <div class="md:col-span-3 fade-in-up" style="transition-delay: 100ms;">
+                        <p class="text-lg text-gray-300 mb-6">
+                            I'm a dedicated developer specializing in the Discord and Minecraft ecosystems. My passion lies in crafting intricate bots, plugins, and applications that offer rich, engaging experiences for communities. From complex Discord RPGs to dynamic Minecraft plugins and robust management tools, I thrive on solving challenges with clean, scalable code.
+                        </p>
+                        <p class="text-lg text-gray-300">
+                            With a strong foundation in modern technologies like TypeScript, Node.js, and cloud infrastructure, I'm committed to pushing the boundaries of what's possible on the Discord platform and beyond.
+                        </p>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <span class="contact-icon">🔗</span>
-                        </div>
-                        <div class="contact-details">
-                            <h4>GitHub</h4>
-                            <p>github.com/Elenyx</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <span class="contact-icon">❤️</span>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Community</h4>
-                            <p>Open Source Community</p>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-dribbble"></i>
-                        </a>
+                    <div class="md:col-span-2 flex justify-center fade-in-up" style="transition-delay: 200ms;">
+                         <div class="w-72 h-72 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 p-2 shadow-2xl">
+                             <div class="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
+                                <!-- Placeholder for an image or logo -->
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-teal-400"><path d="m12 14 4-4"/><path d="m12 14-4-4"/><path d="M3 21v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"/><path d="M3 11V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2"/><path d="M12 19v2"/><path d="M12 5v2"/></svg>
+                             </div>
+                         </div>
                     </div>
                 </div>
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" placeholder="Your Email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="subject" name="subject" placeholder="Subject" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                </form>
             </div>
-        </div>
-    </section>
+        </section>
+        
+        <!-- Skills Section -->
+        <section id="skills" class="py-20">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12 fade-in-up">
+                    <h2 class="text-4xl font-bold mb-2 gradient-text">Tech Stack</h2>
+                    <p class="text-gray-400">The tools and technologies I use to build things.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <!-- Languages -->
+                    <div class="fade-in-up" style="transition-delay: 100ms;">
+                        <h3 class="text-2xl font-semibold mb-4 text-teal-300">Languages</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/typescript/3178C6" alt="TypeScript" class="w-5 h-5 tech-logo">TypeScript</li>
+                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" class="w-5 h-5 tech-logo">JavaScript</li>
+                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL" class="w-5 h-5 tech-logo">SQL</li>
+                        </ul>
+                    </div>
+                    <!-- Frameworks -->
+                    <div class="fade-in-up" style="transition-delay: 200ms;">
+                        <h3 class="text-2xl font-semibold mb-4 text-teal-300">Frameworks</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/nodedotjs/339933" alt="Node.js" class="w-5 h-5 tech-logo">Node.js</li>
+                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/express/000000" alt="Express" class="w-5 h-5 tech-logo">Express</li>
+                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" class="w-5 h-5 tech-logo">React</li>
+                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/vite/646CFF" alt="Vite" class="w-5 h-5 tech-logo">Vite</li>
+                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/discord/5865F2" alt="Discord.js" class="w-5 h-5 tech-logo">Discord.js</li>
+                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/spigotmc/ED8106" alt="Spigot" class="w-5 h-5 tech-logo">Spigot API</li>
+                            <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="assets/paper.png" alt="Paper" class="w-5 h-5 tech-logo">Paper API</li>
+                        </ul>
+                    </div>
+                    <!-- Databases -->
+                    <div class="fade-in-up" style="transition-delay: 300ms;">
+                        <h3 class="text-2xl font-semibold mb-4 text-teal-300">Databases</h3>
+                        <ul class="space-y-3 text-gray-300">
+                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL" class="w-5 h-5 tech-logo">PostgreSQL</li>
+                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/prisma/2D3748" alt="Prisma" class="w-5 h-5 tech-logo">Prisma</li>
+                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/drizzle/C5F74F" alt="Drizzle" class="w-5 h-5 tech-logo">Drizzle</li>
+                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/redis/DC382D" alt="Redis" class="w-5 h-5 tech-logo">Redis</li>
+                        </ul>
+                    </div>
+                    <!-- DevOps -->
+                    <div class="fade-in-up" style="transition-delay: 400ms;">
+                        <h3 class="text-2xl font-semibold mb-4 text-teal-300">DevOps & Infra</h3>
+                        <ul class="space-y-3 text-gray-300">
+                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker" class="w-5 h-5 tech-logo">Docker</li>
+                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/kubernetes/326CE5" alt="Kubernetes" class="w-5 h-5 tech-logo">Kubernetes</li>
+                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.simpleicons.org/terraform/7B42BC" alt="Terraform" class="w-5 h-5 tech-logo">Terraform</li>
+                           <li class="flex items-center gap-3 hover:text-white transition-colors"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="w-5 h-5 tech-logo">AWS</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 bg-gray-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12 fade-in-up">
+                    <h2 class="text-4xl font-bold mb-2 gradient-text">Featured Projects</h2>
+                    <p class="text-gray-400">A selection of my proudest work.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1: Nexium RPG -->
+                    <div class="project-card bg-gray-800 rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-2 transition-transform duration-300 fade-in-up" style="transition-delay: 100ms;">
+                        <div class="relative">
+                           <img src="https://placehold.co/600x400/0a0a0a/64ffda?text=Nexium+RPG" alt="Nexium RPG" class="w-full h-48 object-cover">
+                           <div class="project-overlay absolute inset-0 bg-black/70 flex items-center justify-center gap-4">
+                               <a href="https://github.com/Elenyx/discord-nexium" target="_blank" class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center hover:bg-teal-400 hover:text-black transition-colors" title="View Code on GitHub">
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                               </a>
+                           </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white">Nexium RPG</h3>
+                            <p class="text-gray-400 mb-4 text-sm">A feature-rich space exploration RPG bot for Discord with procedural galaxy exploration, PvP/PvE, guilds, and more.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs bg-teal-900/50 text-teal-300 px-2 py-1 rounded-full">TypeScript</span>
+                                <span class="text-xs bg-teal-900/50 text-teal-300 px-2 py-1 rounded-full">Node.js</span>
+                                <span class="text-xs bg-teal-900/50 text-teal-300 px-2 py-1 rounded-full">PostgreSQL</span>
+                                <span class="text-xs bg-teal-900/50 text-teal-300 px-2 py-1 rounded-full">Docker</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: Friendly Eureka -->
+                    <div class="project-card bg-gray-800 rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-2 transition-transform duration-300 fade-in-up" style="transition-delay: 200ms;">
+                        <div class="relative">
+                           <img src="https://placehold.co/600x400/0a0a0a/bb86fc?text=Friendly+Eureka" alt="Friendly Eureka" class="w-full h-48 object-cover">
+                           <div class="project-overlay absolute inset-0 bg-black/70 flex items-center justify-center gap-4">
+                               <a href="https://github.com/Elenyx/friendly-eureka" target="_blank" class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center hover:bg-purple-400 hover:text-black transition-colors" title="View Code on GitHub">
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                               </a>
+                           </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white">Friendly Eureka</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Space MMO-style Discord bot and web application with a React SPA frontend and an Express backend.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full">React</span>
+                                <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full">Vite</span>
+                                <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full">OAuth2</span>
+                                <span class="text-xs bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full">Express</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: TicketMesh -->
+                    <div class="project-card bg-gray-800 rounded-lg overflow-hidden shadow-lg transform hover:-translate-y-2 transition-transform duration-300 fade-in-up" style="transition-delay: 300ms;">
+                         <div class="relative">
+                           <img src="https://placehold.co/600x400/0a0a0a/e8e8e8?text=TicketMesh" alt="TicketMesh" class="w-full h-48 object-cover">
+                           <div class="project-overlay absolute inset-0 bg-black/70 flex items-center justify-center gap-4">
+                               <a href="https://github.com/Elenyx/TicketMesh" target="_blank" class="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center hover:bg-gray-300 hover:text-black transition-colors" title="View Code on GitHub">
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                               </a>
+                           </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white">TicketMesh</h3>
+                            <p class="text-gray-400 mb-4 text-sm">Advanced Discord ticket management bot with persistent storage, transcript generation, and analytics.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full">Java</span>
+                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full">JDA</span>
+                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full">PostgreSQL</span>
+                                <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded-full">Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12 fade-in-up">
+                    <h2 class="text-4xl font-bold mb-2 gradient-text">Let's Connect</h2>
+                    <p class="text-gray-400 max-w-lg mx-auto">I'm open to collaboration and new opportunities. Feel free to reach out!</p>
+                </div>
+                <div class="max-w-xl mx-auto bg-gray-800/50 border border-gray-700 p-8 rounded-lg shadow-2xl fade-in-up" style="transition-delay: 200ms;">
+                    <form id="contact-form">
+                        <div class="mb-4">
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-300">Name</label>
+                            <input type="text" id="name" name="name" class="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-2 focus:ring-teal-400 focus:border-teal-400 transition" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-300">Email</label>
+                            <input type="email" id="email" name="email" class="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-2 focus:ring-teal-400 focus:border-teal-400 transition" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block mb-2 text-sm font-medium text-gray-300">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full bg-gray-900 border border-gray-700 rounded-md px-4 py-2 focus:ring-teal-400 focus:border-teal-400 transition" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-teal-400 to-purple-500 text-black font-semibold rounded-lg shadow-lg hover:scale-105 transform transition-transform">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2024 Elenyx. All rights reserved.</p>
-                <p>Designed & Built with ❤️ by Elenyx</p>
+    <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-t border-gray-700">
+        <div class="container mx-auto px-4 py-12">
+            <!-- Main Footer Content -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- About Section -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-xl font-bold text-white mb-4">Elenyx</h3>
+                    <p class="text-gray-400 mb-4">Full-stack developer passionate about creating innovative solutions and contributing to the open source community.</p>
+                    <div class="flex justify-center md:justify-start gap-4">
+                        <a href="https://github.com/Elenyx" target="_blank" class="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110" title="GitHub">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                        </a>
+                        <a href="https://linkedin.com/in/elenyx" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 transform hover:scale-110" title="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        </a>
+                        <a href="https://twitter.com/elenyx" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 transform hover:scale-110" title="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                        </a>
+                        <a href="mailto:contact@elenyx.dev" class="text-gray-400 hover:text-teal-400 transition-all duration-300 transform hover:scale-110" title="Email">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-gray-400 hover:text-teal-300 transition-colors">About</a></li>
+                        <li><a href="#projects" class="text-gray-400 hover:text-teal-300 transition-colors">Projects</a></li>
+                        <li><a href="#skills" class="text-gray-400 hover:text-teal-300 transition-colors">Skills</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-teal-300 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Tech Stack Highlights -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-lg font-semibold text-white mb-4">Tech Focus</h3>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Java</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">React</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Node.js</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">PostgreSQL</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">AWS</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Docker</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-gray-700 pt-6">
+                <div class="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+                    <div class="mb-4 md:mb-0">
+                        <p>&copy; 2025 Elenyx. All rights reserved.</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="flex items-center gap-2">
+                            <span>Designed & Built with</span>
+                            <span class="text-red-400 animate-pulse">❤️</span>
+                            <span>for the open source community</span>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
+    
+    <!-- Notification container -->
+    <div id="notification-container" class="fixed bottom-5 right-5 z-50"></div>
 
-    <!-- Project Modal -->
-    <div id="project-modal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
-            <div class="modal-body">
-                <div class="modal-image">
-                    <img id="modal-img" src="" alt="Project Screenshot">
-                </div>
-                <div class="modal-info">
-                    <h3 id="modal-title">Project Title</h3>
-                    <p id="modal-description">Project description goes here...</p>
-                    <div id="modal-tech" class="modal-tech"></div>
-                    <div class="modal-links">
-                        <a href="#" id="modal-github" class="btn btn-secondary">
-                            <i class="fab fa-github"></i> View Code
-                        </a>
-                        <a href="#" id="modal-live" class="btn btn-primary">
-                            <i class="fas fa-external-link-alt"></i> Live Demo
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Navigation ---
+            const navbar = document.getElementById('navbar');
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-gray-900/80', 'backdrop-blur-sm', 'border-b', 'border-gray-800');
+                } else {
+                    navbar.classList.remove('bg-gray-900/80', 'backdrop-blur-sm', 'border-b', 'border-gray-800');
+                }
+            });
+
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('hidden');
+                navMenu.classList.toggle('flex');
+            });
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navMenu.classList.contains('flex')) {
+                        navMenu.classList.add('hidden');
+                        navMenu.classList.remove('flex');
+                    }
+                });
+            });
+
+            // --- Role Typing Animation ---
+            const typingRole = document.getElementById('typing-role');
+            if (typingRole) {
+                const roles = ['Discord Bot Developer', 'Minecraft Plugin Dev', 'TypeScript Expert', 'Backend Architect', 'Open Source Contributor'];
+                let roleIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+
+                function typeRole() {
+                    const currentRole = roles[roleIndex];
+                    let typeSpeed = isDeleting ? 75 : 150;
+
+                    typingRole.textContent = currentRole.substring(0, charIndex);
+
+                    if (isDeleting) {
+                        charIndex--;
+                    } else {
+                        charIndex++;
+                    }
+
+                    if (!isDeleting && charIndex === currentRole.length + 1) {
+                        typeSpeed = 2000;
+                        isDeleting = true;
+                    } else if (isDeleting && charIndex === -1) {
+                        isDeleting = false;
+                        roleIndex = (roleIndex + 1) % roles.length;
+                    }
+
+                    setTimeout(typeRole, typeSpeed);
+                }
+                setTimeout(typeRole, 500);
+            }
+
+            // --- Code Window Typing Animation ---
+            const codeContainer = document.getElementById('code-animation-content');
+            const codeContent = [
+                [
+                    { text: 'const ', class: 'code-keyword' },
+                    { text: 'elenyx ', class: 'code-variable' },
+                    { text: '= {', class: '' }
+                ],
+                [
+                    { text: '  name', class: 'code-property' },
+                    { text: ': ', class: '' },
+                    { text: "'Elenyx'", class: 'code-string' },
+                    { text: ',', class: '' }
+                ],
+                [
+                    { text: '  focus', class: 'code-property' },
+                    { text: ': [', class: '' },
+                    { text: "'Discord Bots'", class: 'code-string' },
+                    { text: ', ', class: '' },
+                    { text: "'Minecraft Plugins'", class: 'code-string' },
+                    { text: ', ', class: '' },
+                    { text: "'Web Apps'", class: 'code-string' },
+                    { text: '],', class: '' }
+                ],
+                [
+                    { text: '  passion', class: 'code-property' },
+                    { text: ': ', class: '' },
+                    { text: "'Building for Communities'", class: 'code-string' }
+                ],
+                [
+                    { text: '};', class: '' }
+                ]
+            ];
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async function typeCodeAnimation() {
+                if(!codeContainer) return;
+                codeContainer.innerHTML = ''; // Clear previous animation
+                
+                for (const line of codeContent) {
+                    const lineEl = document.createElement('div');
+                    lineEl.className = "flex";
+                    codeContainer.appendChild(lineEl);
+                    
+                    for (const token of line) {
+                        const tokenEl = document.createElement('span');
+                        if (token.class) {
+                            tokenEl.className = token.class;
+                        }
+                        lineEl.appendChild(tokenEl);
+                        
+                        for (let i = 0; i < token.text.length; i++) {
+                            await sleep(40 + Math.random() * 40);
+                            tokenEl.textContent += token.text[i];
+                        }
+                    }
+                }
+                const lastLine = codeContainer.lastChild;
+                if (lastLine) {
+                    lastLine.innerHTML += '<span class="typing-caret"></span>';
+                }
+            }
+
+            // --- Intersection Observers ---
+            const animatedElements = document.querySelectorAll('.fade-in-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(el => observer.observe(el));
+
+            const codeWindow = document.querySelector('.code-window');
+            if (codeWindow) {
+                const codeObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting && !codeWindow.dataset.animated) {
+                        typeCodeAnimation();
+                        codeWindow.dataset.animated = 'true';
+                        codeObserver.unobserve(codeWindow);
+                    }
+                }, { threshold: 0.6 });
+                codeObserver.observe(codeWindow);
+            }
+
+
+            // --- Contact Form ---
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+
+                setTimeout(() => {
+                    showNotification('Message sent successfully! I\'ll be in touch soon.', 'success');
+                    contactForm.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }, 1500);
+            });
+            
+            function showNotification(message, type) {
+                const container = document.getElementById('notification-container');
+                const notification = document.createElement('div');
+                const bgColor = type === 'success' ? 'bg-teal-500' : 'bg-red-500';
+
+                notification.className = `px-4 py-3 rounded-lg text-white shadow-lg ${bgColor} transform transition-all duration-300 translate-y-4 opacity-0`;
+                notification.textContent = message;
+                
+                container.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.remove('translate-y-4', 'opacity-0');
+                }, 10);
+
+                setTimeout(() => {
+                    notification.classList.add('opacity-0');
+                    notification.addEventListener('transitionend', () => notification.remove());
+                }, 5000);
+            }
+
+            // Handle broken tech logo images
+            document.querySelectorAll('.tech-logo').forEach(img => {
+                img.addEventListener('error', function() {
+                    // Create a simple colored circle as fallback
+                    if (this.parentNode) {
+                        const fallback = document.createElement('div');
+                        fallback.className = 'w-5 h-5 rounded-full bg-gradient-to-r from-teal-400 to-purple-500 flex-shrink-0';
+                        fallback.style.minWidth = '20px';
+                        fallback.style.minHeight = '20px';
+                        this.parentNode.replaceChild(fallback, this);
+                    }
+                });
+                
+                // Preload images to catch errors early
+                const testImg = new Image();
+                testImg.onload = () => {
+                    img.style.opacity = '0.9';
+                };
+                testImg.onerror = () => {
+                    img.dispatchEvent(new Event('error'));
+                };
+                testImg.src = img.src;
+            });
+        });
+    </script>
 </body>
 </html>
+
