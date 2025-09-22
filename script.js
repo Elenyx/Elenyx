@@ -446,4 +446,243 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
     });
+    // --- Interactive 3D Globe ---
+    let globe = null;
+    let scene, camera, renderer, points;
+    let isGlobeInitialized = false;
+
+    // Visitor data for major cities
+    const visitorData = [
+        { city: "New York", country: "United States", lat: 40.7128, lng: -74.0060, visitors: 1247, online: 23 },
+        { city: "London", country: "United Kingdom", lat: 51.5074, lng: -0.1278, visitors: 892, online: 18 },
+        { city: "Tokyo", country: "Japan", lat: 35.6762, lng: 139.6503, visitors: 1156, online: 31 },
+        { city: "Paris", country: "France", lat: 48.8566, lng: 2.3522, visitors: 743, online: 15 },
+        { city: "Berlin", country: "Germany", lat: 52.5200, lng: 13.4050, visitors: 634, online: 12 },
+        { city: "Sydney", country: "Australia", lat: -33.8688, lng: 151.2093, visitors: 521, online: 9 },
+        { city: "São Paulo", country: "Brazil", lat: -23.5505, lng: -46.6333, visitors: 687, online: 14 },
+        { city: "Mumbai", country: "India", lat: 19.0760, lng: 72.8777, visitors: 934, online: 22 },
+        { city: "Singapore", country: "Singapore", lat: 1.3521, lng: 103.8198, visitors: 456, online: 8 },
+        { city: "Toronto", country: "Canada", lat: 43.6532, lng: -79.3832, visitors: 578, online: 11 },
+        { city: "Seoul", country: "South Korea", lat: 37.5665, lng: 126.9780, visitors: 823, online: 19 },
+        { city: "Amsterdam", country: "Netherlands", lat: 52.3676, lng: 4.9041, visitors: 412, online: 7 },
+        { city: "Dubai", country: "UAE", lat: 25.2048, lng: 55.2708, visitors: 345, online: 6 },
+        { city: "Stockholm", country: "Sweden", lat: 59.3293, lng: 18.0686, visitors: 289, online: 5 },
+        { city: "Cape Town", country: "South Africa", lat: -33.9249, lng: 18.4241, visitors: 234, online: 4 }
+    ];
+
+    function initGlobe() {
+        if (isGlobeInitialized) return;
+        
+        // Check if Three.js is loaded
+        if (typeof THREE === 'undefined') {
+            console.error('Three.js is not loaded!');
+            return;
+        }
+        
+        const globeContainer = document.getElementById('globe-container');
+        if (!globeContainer) return;
+
+        // 1. Scene Setup
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75, globeContainer.clientWidth / globeContainer.clientHeight, 0.1, 1000);
+        camera.position.z = 3;
+
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(globeContainer.clientWidth, globeContainer.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        globeContainer.appendChild(renderer.domElement);
+
+        // 2. Globe Geometry and Material
+        const globeGeometry = new THREE.SphereGeometry(1.5, 64, 64);
+        const globeMaterial = new THREE.MeshBasicMaterial({
+            color: 0x444444, // A dark grey color for the wireframe
+            wireframe: true,
+        });
+        
+        globe = new THREE.Mesh(globeGeometry, globeMaterial);
+        scene.add(globe);
+
+        // 3. Simulated Visitor Points
+        const visitorLocations = [
+            { lat: 40.7128, lon: -74.0060 }, // New York
+            { lat: 34.0522, lon: -118.2437 }, // Los Angeles
+            { lat: 51.5074, lon: -0.1278 },  // London
+            { lat: 48.8566, lon: 2.3522 },   // Paris
+            { lat: 35.6895, lon: 139.6917 }, // Tokyo
+            { lat: -33.8688, lon: 151.2093 }, // Sydney
+            { lat: 19.0760, lon: 72.8777 },  // Mumbai
+            { lat: -23.5505, lon: -46.6333 }, // São Paulo
+            { lat: 39.9042, lon: 116.4074 }, // Beijing
+            { lat: 1.3521, lon: 103.8198 },  // Singapore
+            { lat: 55.7558, lon: 37.6173 },   // Moscow
+            { lat: 6.5244, lon: 3.3792 }     // Lagos
+        ];
+
+        const pointsMaterial = new THREE.PointsMaterial({
+            color: 0x00ff00, // Bright green for the dots
+            size: 0.03,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            opacity: 0.7,
+        });
+
+        const pointsGeometry = new THREE.BufferGeometry();
+        const vertices = [];
+
+        visitorLocations.forEach(loc => {
+            const phi = (90 - loc.lat) * (Math.PI / 180);
+            const theta = (loc.lon + 180) * (Math.PI / 180);
+            const x = -(1.5 * Math.sin(phi) * Math.cos(theta));
+            const y = 1.5 * Math.cos(phi);
+            const z = 1.5 * Math.sin(phi) * Math.sin(theta);
+            vertices.push(x, y, z);
+        });
+        
+        pointsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        points = new THREE.Points(pointsGeometry, pointsMaterial);
+        globe.add(points);
+
+        // 4. Start Animation and Add Controls
+        animateGlobe();
+        
+        globeContainer.addEventListener('mousedown', onMouseDown);
+        window.addEventListener('mouseup', onMouseUp);
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('resize', onWindowResize);
+        
+        // Update stats
+        updateGlobalStats();
+        
+        isGlobeInitialized = true;
+    }
+
+
+
+    let isDragging = false, previousMousePosition = { x: 0, y: 0 };
+
+    function animateGlobe() {
+        if (!isGlobeInitialized) return;
+        
+        requestAnimationFrame(animateGlobe);
+        
+        // Auto-rotation when not dragging
+        if (!isDragging) {
+            globe.rotation.y += 0.0005;
+        }
+
+        // Blinking effect for the points
+        const time = Date.now() * 0.005;
+        if (points) {
+            points.material.opacity = Math.sin(time * 0.7) * 0.4 + 0.6;
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    // --- Mouse Interaction Functions ---
+    function onMouseDown(event) {
+        isDragging = true;
+        const globeContainer = document.getElementById('globe-container');
+        if (globeContainer) {
+            globeContainer.style.cursor = 'grabbing';
+        }
+        previousMousePosition = {
+            x: event.clientX,
+            y: event.clientY
+        };
+    }
+
+    function onMouseUp() {
+        isDragging = false;
+        const globeContainer = document.getElementById('globe-container');
+        if (globeContainer) {
+            globeContainer.style.cursor = 'grab';
+        }
+    }
+
+    function onMouseMove(event) {
+        if (!isDragging) return;
+        const deltaMove = {
+            x: event.clientX - previousMousePosition.x,
+            y: event.clientY - previousMousePosition.y
+        };
+
+        globe.rotation.y += deltaMove.x * 0.005;
+        globe.rotation.x += deltaMove.y * 0.005;
+        
+        previousMousePosition = {
+            x: event.clientX,
+            y: event.clientY
+        };
+    }
+    
+    function onWindowResize() {
+        if (!renderer || !camera) return;
+        
+        const globeContainer = document.getElementById('globe-container');
+        if (!globeContainer) return;
+        
+        camera.aspect = globeContainer.clientWidth / globeContainer.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(globeContainer.clientWidth, globeContainer.clientHeight);
+    }
+
+
+
+    function updateGlobalStats() {
+        const totalVisitors = visitorData.reduce((sum, visitor) => sum + visitor.visitors, 0);
+        const totalOnline = visitorData.reduce((sum, visitor) => sum + visitor.online, 0);
+        const countries = new Set(visitorData.map(v => v.country)).size;
+        const cities = visitorData.length;
+        
+        // Animate counters
+        animateCounter('total-visitors', totalVisitors);
+        animateCounter('active-countries', countries);
+        animateCounter('active-cities', cities);
+        animateCounter('online-now', totalOnline);
+    }
+
+    function animateCounter(elementId, targetValue) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        
+        let currentValue = 0;
+        const increment = targetValue / 50;
+        const timer = setInterval(() => {
+            currentValue += increment;
+            if (currentValue >= targetValue) {
+                currentValue = targetValue;
+                clearInterval(timer);
+            }
+            element.textContent = Math.floor(currentValue).toLocaleString();
+        }, 30);
+    }
+
+    // Initialize globe when section comes into view
+    const globeSection = document.getElementById('global-reach');
+    if (globeSection) {
+        const globeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !isGlobeInitialized) {
+                    setTimeout(() => {
+                        initGlobe();
+                    }, 500);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        globeObserver.observe(globeSection);
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (isGlobeInitialized && renderer && camera) {
+            const globeContainer = document.getElementById('globe-container');
+            if (globeContainer) {
+                camera.aspect = globeContainer.clientWidth / globeContainer.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(globeContainer.clientWidth, globeContainer.clientHeight);
+            }
+        }
+    });
 });
