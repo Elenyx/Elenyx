@@ -24,6 +24,131 @@ document.addEventListener('DOMContentLoaded', function() {
     updateRuntime(); // Initial call
     setInterval(updateRuntime, 1000);
 
+    // --- GitHub Statistics Integration ---
+    async function fetchGitHubStats() {
+        try {
+            const username = 'Elenyx';
+            const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+            
+            if (!response.ok) {
+                throw new Error('GitHub API request failed');
+            }
+            
+            const repos = await response.json();
+            
+            // Calculate statistics from repository data
+            const stats = calculateStats(repos);
+            
+            // Update the statistics in the DOM
+            updateStatistics(stats);
+            
+        } catch (error) {
+            console.warn('Failed to fetch GitHub stats, using fallback values:', error);
+            // Use fallback static values if API fails
+            const fallbackStats = {
+                discordBots: 3,
+                minecraftPlugins: 2,
+                webApps: 5,
+                techStack: 15,
+                openSource: 100
+            };
+            updateStatistics(fallbackStats);
+        }
+    }
+    
+    function calculateStats(repos) {
+        // Filter repositories by type based on language, topics, and names
+        const discordBots = repos.filter(repo => 
+            repo.language === 'TypeScript' || repo.language === 'JavaScript' || 
+            (repo.topics && repo.topics.some(topic => 
+                topic.includes('discord') || topic.includes('bot')
+            )) ||
+            repo.name.toLowerCase().includes('discord') ||
+            repo.name.toLowerCase().includes('bot')
+        ).length;
+        
+        const minecraftPlugins = repos.filter(repo => 
+            repo.language === 'Java' || 
+            (repo.topics && repo.topics.some(topic => 
+                topic.includes('minecraft') || topic.includes('bukkit') || topic.includes('spigot')
+            )) ||
+            repo.name.toLowerCase().includes('minecraft') ||
+            repo.name.toLowerCase().includes('plugin')
+        ).length;
+        
+        const webApps = repos.filter(repo => 
+            repo.language === 'HTML' || repo.language === 'CSS' || 
+            repo.language === 'JavaScript' || repo.language === 'TypeScript' ||
+            (repo.topics && repo.topics.some(topic => 
+                topic.includes('web') || topic.includes('react') || topic.includes('frontend')
+            )) ||
+            repo.name.toLowerCase().includes('web') ||
+            repo.name.toLowerCase().includes('app')
+        ).length;
+        
+        // Count unique languages as tech stack
+        const languages = new Set(repos.map(repo => repo.language).filter(lang => lang !== null));
+        const techStack = languages.size;
+        
+        // Calculate open source percentage (all public repos are open source)
+        const publicRepos = repos.filter(repo => !repo.private).length;
+        const openSource = repos.length > 0 ? Math.round((publicRepos / repos.length) * 100) : 100;
+        
+        return {
+            discordBots: Math.max(discordBots, 3), // Ensure minimum values based on known projects
+            minecraftPlugins: Math.max(minecraftPlugins, 2),
+            webApps: Math.max(webApps, 5),
+            techStack: Math.max(techStack, 15),
+            openSource: openSource
+        };
+    }
+    
+    function updateStatistics(stats) {
+        // Update data-target attributes and trigger animations
+        const statElements = {
+            discordBots: document.querySelector('.stat-card:nth-child(1) .stat-number'),
+            minecraftPlugins: document.querySelector('.stat-card:nth-child(2) .stat-number'),
+            webApps: document.querySelector('.stat-card:nth-child(3) .stat-number'),
+            techStack: document.querySelector('.stat-card:nth-child(4) .stat-number'),
+            openSource: document.querySelector('.stat-card:nth-child(5) .stat-number')
+        };
+        
+        // Update Discord Bots
+        if (statElements.discordBots) {
+            statElements.discordBots.setAttribute('data-target', stats.discordBots);
+            statElements.discordBots.textContent = '0+';
+        }
+        
+        // Update Minecraft Plugins
+        if (statElements.minecraftPlugins) {
+            statElements.minecraftPlugins.setAttribute('data-target', stats.minecraftPlugins);
+            statElements.minecraftPlugins.textContent = '0+';
+        }
+        
+        // Update Web Apps
+        if (statElements.webApps) {
+            statElements.webApps.setAttribute('data-target', stats.webApps);
+            statElements.webApps.textContent = '0+';
+        }
+        
+        // Update Tech Stack
+        if (statElements.techStack) {
+            statElements.techStack.setAttribute('data-target', stats.techStack);
+            statElements.techStack.textContent = '0+';
+        }
+        
+        // Update Open Source
+        if (statElements.openSource) {
+            statElements.openSource.setAttribute('data-target', stats.openSource);
+            statElements.openSource.textContent = '0%';
+        }
+        
+        console.log('GitHub Stats Updated:', stats);
+    }
+    
+    // Fetch GitHub stats on page load
+    fetchGitHubStats();
+
     // --- Fade-in Animation ---
     const observerOptions = {
         threshold: 0.1,
